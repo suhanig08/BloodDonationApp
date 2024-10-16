@@ -41,6 +41,23 @@ class ProfileFragment : Fragment() {
 
         dbRef = FirebaseDatabase.getInstance().getReference("donor")
 
+
+        val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+        val name=sharedPreferences?.getString("name","")
+
+        binding.profileName.text=name
+
+        dbRef.child(name.toString()).child("bloodgroup").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val bloodGroup = snapshot.value.toString()
+                binding.tvBloodGrp.text = bloodGroup
+            } else {
+                binding.tvBloodGrp.text = "N/A" // Or some placeholder text
+            }
+        }.addOnFailureListener {
+            binding.tvBloodGrp.text = "Error" // In case of any errors
+        }
+
         val toggleAvailability: MaterialSwitch = view.findViewById(R.id.toggle_availability)
         val accountInfo: ImageView = view.findViewById(R.id.accInfo)
         val donorHistory: ImageView = view.findViewById(R.id.donationHistory)
