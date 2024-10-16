@@ -1,8 +1,6 @@
 package com.adas.redconnect
 
-import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +8,8 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class BloodGroupFragment : Fragment() {
 
@@ -36,16 +35,18 @@ class BloodGroupFragment : Fragment() {
                 val selectedBloodGroup = view.findViewById<RadioButton>(selectedBloodGroupId).text
                 val selectedRhFactor = view.findViewById<RadioButton>(selectedRhFactorId).text
 
-                // Use the selectedBloodGroup and selectedRhFactor as needed
+                // Toast to show selected blood group and Rh factor
                 Toast.makeText(
                     requireContext(),
                     "Selected: $selectedBloodGroup $selectedRhFactor",
                     Toast.LENGTH_SHORT
                 ).show()
 
-                // Navigate to the next fragment or activity
-                // Example: navigateToNextFragment()
+                // Navigate to the next fragment (GenderFragment)
+                findNavController().navigate(R.id.action_bloodGroupFragment_to_genderFragment)
+
             } else {
+                // Show message if no selection
                 Toast.makeText(
                     requireContext(),
                     "Please select both blood group and Rh factor",

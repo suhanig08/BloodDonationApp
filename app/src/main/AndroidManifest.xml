@@ -17,7 +17,7 @@
         android:theme="@style/Theme.RedConnect"
         tools:targetApi="31">
         <activity
-            android:name=".User_Details"
+            android:name=".UserDetails"
             android:exported="false" />
         <activity
             android:name=".LocationActivity"
