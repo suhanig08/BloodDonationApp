@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "917495699984",
+    "project_id": "red-connect-3994a",
+    "storage_bucket": "red-connect-3994a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917495699984:android:04d38abfa15700d1484895",
+        "android_client_info": {
+          "package_name": "com.adas.redconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpsNUhwNF3uuJSepemCuIwuE4AuRosakE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

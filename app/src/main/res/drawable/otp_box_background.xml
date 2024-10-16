@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/otp_box_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background color (optional) -->
+    <solid android:color="@color/darkGrey" />
+
+    <!-- Rounded corners -->
+    <corners android:radius="8dp" />
+
+    <!-- Border/Stroke -->
+    <stroke
+        android:width="2dp"
+        android:color="#760E0E" />
+
+    <!-- Padding (optional for spacing inside the box) -->
+    <padding
+        android:left="4dp"
+        android:right="4dp"
+        android:top="4dp"
+        android:bottom="4dp" />
+</shape>
