@@ -15,7 +15,7 @@
         android:layout_marginBottom="26dp">
 
         <View
-            android:layout_width="85dp"
+            android:layout_width="75dp"
             android:layout_height="8dp"
             android:background="@drawable/progress_indicator_active" />
 
@@ -24,7 +24,7 @@
             android:layout_height="8dp" />
 
         <View
-            android:layout_width="85dp"
+            android:layout_width="75dp"
             android:layout_height="8dp"
             android:background="@drawable/progress_indicator" />
 
@@ -33,7 +33,7 @@
             android:layout_height="8dp" />
 
         <View
-            android:layout_width="85dp"
+            android:layout_width="75dp"
             android:layout_height="8dp"
             android:background="@drawable/progress_indicator" />
 
@@ -42,7 +42,7 @@
             android:layout_height="8dp" />
 
         <View
-            android:layout_width="85dp"
+            android:layout_width="75dp"
             android:layout_height="8dp"
             android:background="@drawable/progress_indicator" />
     </LinearLayout>
