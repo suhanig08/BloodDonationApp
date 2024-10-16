@@ -71,40 +71,57 @@
             android:padding="10dp"
             android:textColorHint="@color/white"
             android:background="@drawable/edit_text_border"/>
-        <EditText
+        
+        <LinearLayout
             android:layout_marginTop="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:orientation="horizontal">
+            
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                app:ccp_contentColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_showFlag="false"
+                app:ccp_showNameCode="false"/>
+
+
+            <EditText
+
             android:id="@+id/phoneEt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Phone No."
             android:textColorHint="@color/white"
-            android:inputType="number"
-            android:padding="10dp"
-            android:background="@drawable/edit_text_border"/>
+            android:inputType="phone"
+            android:padding="10dp" />
+        </LinearLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/locationEt"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/edit_text_border"
-            android:hint="Location"
-            android:padding="10dp"
-            android:textColorHint="@color/white"
-            />
+<!--        <AutoCompleteTextView-->
+<!--            android:id="@+id/locationEt"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="25dp"-->
+<!--            android:layout_marginLeft="25dp"-->
+<!--            android:layout_marginRight="25dp"-->
+<!--            android:background="@drawable/edit_text_border"-->
+<!--            android:hint="Location"-->
+<!--            android:padding="10dp"-->
+<!--            android:textColorHint="@color/white"-->
+<!--            />-->
 
 
         <Button
-            android:id="@+id/SignInBtn"
+            android:id="@+id/NextBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/redPrimary"
             android:layout_margin="20dp"
-            android:text="Sign In"/>
+            android:text="Next"/>
 
     </LinearLayout>
 
