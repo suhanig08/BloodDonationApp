@@ -15,7 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        android:background="#D43737">
+        android:background="#F23B3B">
 
         <ImageView
             android:id="@+id/authImg"

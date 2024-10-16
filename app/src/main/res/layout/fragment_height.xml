@@ -1,0 +1,91 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="20dp">
+
+    <!-- Manual Progress Bar with shapes -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="26dp">
+
+        <View
+            android:layout_width="85dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator_active" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="85dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator_active" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="85dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator_active" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="85dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator" />
+    </LinearLayout>
+
+    <!-- Title -->
+    <TextView
+        android:layout_marginTop="50dp"
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How Tall are you ?"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="50dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/measure_height_icon"
+        android:layout_marginBottom="40dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:hint="Enter your height in cm"/>
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="70dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="95dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/red"
+        android:drawableTop="@drawable/baseline_navigate_next_24" />
+
+
+
+
+
+</LinearLayout>
