@@ -1,6 +1,7 @@
 package com.adas.redconnect
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,20 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.adas.redconnect.databinding.FragmentGenderBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class GenderFragment : Fragment() {
+
+    private lateinit var binding: FragmentGenderBinding
+
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var genderGroup: RadioGroup
     private lateinit var buttonNext: Button
@@ -20,7 +31,15 @@ class GenderFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_gender, container, false)
+        binding = FragmentGenderBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        dbRef = FirebaseDatabase.getInstance().getReference("donor")
 
         genderGroup = view.findViewById(R.id.gender)
         buttonNext = view.findViewById(R.id.button_next)
@@ -32,6 +51,14 @@ class GenderFragment : Fragment() {
             if (selectedGenderId != -1) {
                 // A RadioButton is selected
                 val selectedGender = view.findViewById<RadioButton>(selectedGenderId).text
+                Log.e("UserDetailss",selectedGender.toString())
+
+                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+                val name=sharedPreferences?.getString("name","")
+                if(name!!.isNotEmpty()) {
+                    dbRef.child(name).child("gender")
+                        .setValue(selectedGender.toString())
+                }
 
                 // Optional: Show a Toast with the selected gender
                 Toast.makeText(requireContext(), "Selected: $selectedGender", Toast.LENGTH_SHORT).show()
@@ -44,6 +71,5 @@ class GenderFragment : Fragment() {
             }
         }
 
-        return view
     }
 }

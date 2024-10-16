@@ -2,6 +2,7 @@ package com.adas.redconnect
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
@@ -28,10 +29,18 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
 import kotlin.properties.Delegates
 
 class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var editor:SharedPreferences.Editor
+
     private lateinit var binding: ActivityLocationBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -47,6 +56,11 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding = ActivityLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
+
+        dbRef= FirebaseDatabase.getInstance().getReference("donor")
+
 
         if(!Places.isInitialized()){
             Places.initialize(applicationContext, API_KEY)
@@ -96,6 +110,13 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun nextBtnEnabled() {
+        val sharedPreferences=getSharedPreferences("DonorDet", MODE_PRIVATE)
+        val name=sharedPreferences.getString("name","")
+        Log.e("UserDetailss",name.toString())
+        if(name!!.isNotEmpty()) {
+            dbRef.child(name).child("address")
+                .setValue(binding.locationTv.text.toString())
+        }
         Log.i("locationTv", binding.locationTv.text.toString())
         binding.nxtBtn.alpha = 1.0F
         binding.nxtBtn.isClickable = true
