@@ -42,69 +42,93 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/authLL1"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintTop_toBottomOf="@+id/authLL1">
 
         <EditText
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
             android:id="@+id/nameEt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Name"
-            android:padding="10dp"
-            android:textColorHint="@color/white"
-            android:background="@drawable/edit_text_border"/>
-        <EditText
-            android:layout_marginTop="25dp"
             android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="25dp"
+            android:background="@drawable/edit_text_border"
+            android:hint="Name"
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:textColorHint="@color/hintColor" />
+
+        <EditText
             android:id="@+id/ageEt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Age"
-            android:inputType="number"
-            android:padding="10dp"
-            android:textColorHint="@color/white"
-            android:background="@drawable/edit_text_border"/>
-        <EditText
-            android:layout_marginTop="25dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:id="@+id/phoneEt"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Phone No."
-            android:textColorHint="@color/white"
-            android:inputType="number"
-            android:padding="10dp"
-            android:background="@drawable/edit_text_border"/>
-
-        <AutoCompleteTextView
-            android:id="@+id/locationEt"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
             android:layout_marginTop="25dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/edit_text_border"
-            android:hint="Location"
+            android:hint="Age"
+            android:textSize="15sp"
+            android:inputType="number"
             android:padding="10dp"
-            android:textColorHint="@color/white"
-            />
+            android:textColorHint="@color/hintColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/edit_text_border"
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                app:ccp_textSize="15sp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_contentColor="@color/white"
+                app:ccp_showNameCode="false" />
+
+
+            <EditText
+
+                android:id="@+id/phoneEt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Phone No."
+                android:inputType="phone"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColorHint="@color/hintColor" />
+        </LinearLayout>
+
+        <!--        <AutoCompleteTextView-->
+        <!--            android:id="@+id/locationEt"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:layout_marginTop="25dp"-->
+        <!--            android:layout_marginLeft="25dp"-->
+        <!--            android:layout_marginRight="25dp"-->
+        <!--            android:background="@drawable/edit_text_border"-->
+        <!--            android:hint="Location"-->
+        <!--            android:padding="10dp"-->
+        <!--            android:textColorHint="@color/white"-->
+        <!--            />-->
 
 
         <Button
-            android:id="@+id/SignInBtn"
+            android:id="@+id/NextBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/redPrimary"
             android:layout_margin="20dp"
-            android:text="Sign In"/>
+            android:backgroundTint="@color/redPrimary"
+            android:text="Next" />
 
     </LinearLayout>
 
