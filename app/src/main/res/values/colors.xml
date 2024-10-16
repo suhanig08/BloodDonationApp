@@ -6,4 +6,5 @@
     <color name="darkGrey">#1d1a1b</color>
     <color name="lightGrey">#9B9898</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="hintColor">#6B6B6B</color>
 </resources>
