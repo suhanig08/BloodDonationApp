@@ -1,48 +1,49 @@
-package com.adas.redconnect.Details_Fragment
+package com.adas.redconnect
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.RadioButton
-import com.adas.redconnect.R
-import com.adas.redconnect.databinding.FragmentGenderBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import android.widget.RadioGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class GenderFragment : Fragment() {
 
-    private lateinit var binding: FragmentGenderBinding
-
-    private lateinit var dbRef: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+    private lateinit var genderGroup: RadioGroup
+    private lateinit var buttonNext: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentGenderBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        val view = inflater.inflate(R.layout.fragment_gender, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        genderGroup = view.findViewById(R.id.gender)
+        buttonNext = view.findViewById(R.id.button_next)
 
-        auth = FirebaseAuth.getInstance()
-        dbRef = FirebaseDatabase.getInstance().getReference("donor")
+        buttonNext.setOnClickListener {
+            // Get the selected RadioButton's ID
+            val selectedGenderId = genderGroup.checkedRadioButtonId
 
-        binding.gender.setOnCheckedChangeListener { group, checkedId ->
-            // Get the selected RadioButton
-            val selectedRadioButton = view.findViewById<RadioButton>(checkedId)
-            // Set the selectedGender variable to the text of the selected RadioButton
-            val selectedGender = selectedRadioButton.text.toString()
-            dbRef.child(auth.currentUser!!.uid).child("gender").setValue(selectedGender)
+            if (selectedGenderId != -1) {
+                // A RadioButton is selected
+                val selectedGender = view.findViewById<RadioButton>(selectedGenderId).text
+
+                // Optional: Show a Toast with the selected gender
+                Toast.makeText(requireContext(), "Selected: $selectedGender", Toast.LENGTH_SHORT).show()
+
+                // Navigate to the HeightFragment
+                findNavController().navigate(R.id.action_genderFragment_to_heightFragment)
+            } else {
+                // No selection, show a message
+                Toast.makeText(requireContext(), "Please select a gender", Toast.LENGTH_SHORT).show()
+            }
         }
 
-
+        return view
     }
-
 }

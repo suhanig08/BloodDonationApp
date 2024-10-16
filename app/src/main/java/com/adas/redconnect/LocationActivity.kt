@@ -12,9 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.location.LocationManagerCompat.getCurrentLocation
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.adas.redconnect.databinding.ActivityLocationBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -31,17 +28,11 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
 import kotlin.properties.Delegates
 
 class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
-
     private lateinit var binding: ActivityLocationBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var dbRef: DatabaseReference
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private val API_KEY = "AIzaSyD65Ys-rNZuaTeP1ZnrucaYWAVzNBEHgGM"
@@ -56,10 +47,6 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding = ActivityLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        auth = FirebaseAuth.getInstance()
-
-        dbRef= FirebaseDatabase.getInstance().getReference("donor")
 
         if(!Places.isInitialized()){
             Places.initialize(applicationContext, API_KEY)
@@ -109,7 +96,6 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun nextBtnEnabled() {
-        dbRef.child(auth.currentUser!!.uid).child("address").setValue(binding.locationTv.text.toString())
         Log.i("locationTv", binding.locationTv.text.toString())
         binding.nxtBtn.alpha = 1.0F
         binding.nxtBtn.isClickable = true
@@ -124,8 +110,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
             if(choice == "donor"){
-                val intent = Intent(this, MainActivity::class.java)
-
+                val intent = Intent(this, UserDetails::class.java)
                 startActivity(intent)
                 finish()
             } else{

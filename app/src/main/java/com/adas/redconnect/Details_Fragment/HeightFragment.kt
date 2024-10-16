@@ -1,35 +1,42 @@
-package com.adas.redconnect.Details_Fragment
+package com.adas.redconnect
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.adas.redconnect.R
-import com.adas.redconnect.databinding.FragmentGenderBinding
-import com.adas.redconnect.databinding.FragmentHeightBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class HeightFragment : Fragment() {
 
-    private lateinit var binding: FragmentHeightBinding
-
-    private lateinit var dbRef: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+    private lateinit var heightInput: EditText
+    private lateinit var buttonNext: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentHeightBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        val view = inflater.inflate(R.layout.fragment_height, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dbRef.child(auth.currentUser!!.uid).child("height").setValue(binding.heightUser.text.toString())
-    }
+        heightInput = view.findViewById(R.id.height_input)  // Assuming EditText ID is 'height_input'
+        buttonNext = view.findViewById(R.id.button_next)
 
+        buttonNext.setOnClickListener {
+            val heightText = heightInput.text.toString()
+
+            if (!TextUtils.isEmpty(heightText)) {
+                // Valid input, proceed to the next fragment (WeightFragment)
+                findNavController().navigate(R.id.action_heightFragment_to_weightFragment)
+            } else {
+                // Show a message if no input is provided
+                Toast.makeText(requireContext(), "Please enter your height", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return view
+    }
 }
