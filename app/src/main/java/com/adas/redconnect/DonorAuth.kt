@@ -55,10 +55,9 @@ class DonorAuth : AppCompatActivity() {
 
     binding.NextBtn.setOnClickListener {
         val name=binding.nameEt.text
-        val age=binding.ageEt.text
         phNum = binding.phoneEt.text.toString()
         countrycodePicker.registerCarrierNumberEditText(binding.phoneEt)
-        if (countrycodePicker.isValidFullNumber&&name.isNotEmpty()&&age.isNotEmpty()) {
+        if (countrycodePicker.isValidFullNumber&&name.isNotEmpty()) {
 
                 val i = Intent(this, OtpActivity::class.java)
                 i.putExtra("phoneNum", countrycodePicker.fullNumberWithPlus)
@@ -66,9 +65,6 @@ class DonorAuth : AppCompatActivity() {
         } else {
             if(name.isEmpty()) {
                 binding.nameEt.error="Please enter your name"
-            }
-            if(age.isEmpty()) {
-                binding.ageEt.error="Please enter your age"
             }
             if(binding.phoneEt.text.isEmpty()){
                 binding.phoneEt.error="Please enter your phone number"

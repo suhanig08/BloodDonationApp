@@ -24,7 +24,7 @@
             android:exported="false" />
         <activity
             android:name=".OtpActivity"
-            android:exported="false" />
+            android:exported="false" >
 
         </activity>
         <activity
