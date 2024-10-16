@@ -43,7 +43,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private var currLat by Delegates.notNull<Double>()
     private var currLong by Delegates.notNull<Double>()
     private lateinit var searchLatlng : LatLng
-    private lateinit var mm : Marker
+    private var mm : Marker? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -120,10 +120,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun zoomOnSearchLoc() {
-        if(mm != null){
-            mm.remove()
-        }
-        mm = myMap.addMarker(MarkerOptions().position(searchLatlng))!!
+        mm?.remove()
+        mm = myMap.addMarker(MarkerOptions().position(searchLatlng))
         myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(searchLatlng, 15f))
     }
 
@@ -145,10 +143,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                     val latLng = LatLng(location.latitude, location.longitude)
-                    if(mm != null){
-                        mm.remove()
-                    }
-                    mm = myMap.addMarker(MarkerOptions().position(latLng))!!
+                    mm?.remove()
+                    mm = myMap.addMarker(MarkerOptions().position(latLng))
                     myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19f))
 
 

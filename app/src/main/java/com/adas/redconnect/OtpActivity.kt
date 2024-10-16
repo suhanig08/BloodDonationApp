@@ -4,30 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.adas.redconnect.databinding.ActivityDonorAuthBinding
 import com.adas.redconnect.databinding.ActivityOtpBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import java.util.Timer
-import java.util.TimerTask
 import java.util.concurrent.TimeUnit
 
 class OtpActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOtpBinding
-    private lateinit var auth:FirebaseAuth
-    var timeOutSeconds=60L
-    private lateinit var verificationCode:String
+    private lateinit var auth: FirebaseAuth
+    private var timeOutSeconds = 60L
+    private lateinit var verificationCode: String
     private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,55 +40,80 @@ class OtpActivity : AppCompatActivity() {
             insets
         }
 
-        auth=FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
         val phNum = intent.getStringExtra("phoneNum")
-       Log.e("phoneNum",phNum.toString())
+        Log.e("phoneNum", phNum.toString())
         sendOtp(phNum!!, false)
 
+        // Set up OTP fields for automatic focus shifting
+        setupOtpInputs()
+
         binding.NextBtn.setOnClickListener {
-            val enteredOtp=binding.otpBox1.text.toString()+binding.otpBox2.text.toString()+
-                    binding.otpBox3.text.toString()+
-                    binding.otpBox4.text.toString()+binding.otpBox5.text.toString()+binding.otpBox6.text.toString()
-            val credential=PhoneAuthProvider.getCredential(verificationCode,enteredOtp)
+            val enteredOtp = binding.otpBox1.text.toString() + binding.otpBox2.text.toString() +
+                    binding.otpBox3.text.toString() +
+                    binding.otpBox4.text.toString() + binding.otpBox5.text.toString() + binding.otpBox6.text.toString()
+            val credential = PhoneAuthProvider.getCredential(verificationCode, enteredOtp)
             signInWithPhoneAuthCredential(credential)
             setInProgress(true)
-
         }
 
         binding.resendTv.setOnClickListener {
-            sendOtp(phNum,true)
+            sendOtp(phNum, true)
         }
     }
 
-        fun sendOtp(phNum:String,isResend:Boolean){
-            startResendTimer()
-            setInProgress(true)
-            val builder = PhoneAuthOptions.newBuilder(auth)
-                        .setPhoneNumber(phNum)
-                        .setTimeout(timeOutSeconds,TimeUnit.SECONDS)
-                        .setActivity(this)
-                        .setCallbacks(callbacks)
+    private fun setupOtpInputs() {
+        val otpFields = arrayOf(
+            binding.otpBox1, binding.otpBox2, binding.otpBox3,
+            binding.otpBox4, binding.otpBox5, binding.otpBox6
+        )
 
-            if(isResend){
-                PhoneAuthProvider.verifyPhoneNumber(builder.setForceResendingToken(forceResendingToken).build())
-            }
-            else{
-                PhoneAuthProvider.verifyPhoneNumber(builder.build())
-            }
+        otpFields.forEachIndexed { index, editText ->
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    if (s?.length == 1) {
+                        // Move to next EditText if available
+                        if (index < otpFields.size - 1) {
+                            otpFields[index + 1].requestFocus()
+                        }
+                    } else if (s?.isEmpty() == true && index > 0) {
+                        // Move to previous EditText if backspace is pressed
+                        otpFields[index - 1].requestFocus()
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
         }
+    }
 
-    private val callbacks = object: PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+    fun sendOtp(phNum: String, isResend: Boolean) {
+        startResendTimer()
+        setInProgress(true)
+        val builder = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(phNum)
+            .setTimeout(timeOutSeconds, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(callbacks)
+
+        if (isResend) {
+            PhoneAuthProvider.verifyPhoneNumber(builder.setForceResendingToken(forceResendingToken).build())
+        } else {
+            PhoneAuthProvider.verifyPhoneNumber(builder.build())
+        }
+    }
+
+    private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         override fun onVerificationCompleted(p0: PhoneAuthCredential) {
             setInProgress(false)
             signInWithPhoneAuthCredential(p0)
-//            val i= Intent(this@OtpActivity,LocationActivity::class.java)
-//            startActivity(i)
         }
-        override fun onVerificationFailed(p0: FirebaseException) {
-            Toast.makeText(this@OtpActivity, "Otp Verification Failed", Toast.LENGTH_SHORT).show()
-            setInProgress(false)
 
+        override fun onVerificationFailed(p0: FirebaseException) {
+            Toast.makeText(this@OtpActivity, "OTP Verification Failed", Toast.LENGTH_SHORT).show()
+            setInProgress(false)
         }
 
         override fun onCodeSent(
@@ -97,9 +121,9 @@ class OtpActivity : AppCompatActivity() {
             p1: PhoneAuthProvider.ForceResendingToken
         ) {
             super.onCodeSent(p0, p1)
-            verificationCode=p0
-            forceResendingToken=p1
-            Toast.makeText(this@OtpActivity, "Otp Sent Successfully", Toast.LENGTH_SHORT).show()
+            verificationCode = p0
+            forceResendingToken = p1
+            Toast.makeText(this@OtpActivity, "OTP Sent Successfully", Toast.LENGTH_SHORT).show()
             setInProgress(false)
         }
     }
@@ -114,27 +138,16 @@ class OtpActivity : AppCompatActivity() {
         }
     }
 
-
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         setInProgress(true)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 setInProgress(false)
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    //Log.d(TAG, "signInWithCredential:success")
-                //                    val user = task.result?.user
-                    val i=Intent(this,LocationActivity::class.java)
+                    val i = Intent(this, LocationActivity::class.java)
                     startActivity(i)
-
                 } else {
-                    Toast.makeText(this, "Otp Verification Failed", Toast.LENGTH_SHORT).show()
-                    // Sign in failed, display a message and update the UI
-                    //Log.w(TAG, "signInWithCredential:failure", task.exception)
-//                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-//                        // The verification code entered was invalid
-//                    }
-                    // Update UI
+                    Toast.makeText(this, "OTP Verification Failed", Toast.LENGTH_SHORT).show()
                 }
             }
     }
@@ -158,6 +171,4 @@ class OtpActivity : AppCompatActivity() {
         }
         handler.post(runnable)
     }
-
-
 }

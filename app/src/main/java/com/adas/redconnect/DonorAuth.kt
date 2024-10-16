@@ -51,16 +51,30 @@ class DonorAuth : AppCompatActivity() {
     auth = FirebaseAuth.getInstance()
 
     binding.NextBtn.setOnClickListener {
+        val name=binding.nameEt.text
+        val age=binding.ageEt.text
         phNum = binding.phoneEt.text.toString()
         countrycodePicker.registerCarrierNumberEditText(binding.phoneEt)
-        if (countrycodePicker.isValidFullNumber) {
+        if (countrycodePicker.isValidFullNumber&&name.isNotEmpty()&&age.isNotEmpty()) {
 
                 val i = Intent(this, OtpActivity::class.java)
                 i.putExtra("phoneNum", countrycodePicker.fullNumberWithPlus)
                 startActivity(i)
         } else {
+            if(name.isEmpty()) {
+                binding.nameEt.error="Please enter your name"
+            }
+            if(age.isEmpty()) {
+                binding.ageEt.error="Please enter your age"
+            }
+            if(binding.phoneEt.text.isEmpty()){
+                binding.phoneEt.error="Please enter your phone number"
+            }
+            else if(!countrycodePicker.isValidFullNumber){
+                binding.phoneEt.error = "Please enter a valid phone number"
+            }
             // Show a message to the user indicating the phone number is required
-            binding.phoneEt.setError("Please enter a valid phone number")
+
         }
     }
 }
