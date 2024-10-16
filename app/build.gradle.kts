@@ -54,8 +54,14 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation (libs.retrofit)
     //gson
+    implementation (libs.converter.gson)
+    implementation(libs.places.ktx)
+
+    implementation (libs.androidx.navigation.fragment.ktx.v260)
+    implementation (libs.androidx.navigation.ui.ktx.v260)
+    
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.google.maps.android:places-ktx:3.2.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
@@ -66,4 +72,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
 
     implementation ("com.hbb20:ccp:2.5.0")
+
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }
