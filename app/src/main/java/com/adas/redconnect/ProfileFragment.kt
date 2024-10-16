@@ -44,8 +44,10 @@ class ProfileFragment : Fragment() {
         }
 
         accountInfo.setOnClickListener {
-            val intent  = Intent(context, account_InfoFragment::class.java)
-            startActivity(intent)
+            val accInfoFrag  = account_InfoFragment()
+
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.profileFragment,accInfoFrag).addToBackStack(null).commit()
+
         }
 
         return view
