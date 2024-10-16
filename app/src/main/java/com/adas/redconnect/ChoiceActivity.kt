@@ -8,9 +8,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.adas.redconnect.databinding.ActivityChoiceBinding
 import com.adas.redconnect.databinding.ActivityDonorAuthBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class ChoiceActivity : AppCompatActivity() {
     private lateinit var binding:ActivityChoiceBinding
+    private lateinit var dbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +22,7 @@ class ChoiceActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
 
         binding = ActivityChoiceBinding.inflate(layoutInflater)
+
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -28,6 +32,7 @@ class ChoiceActivity : AppCompatActivity() {
         }
 
         binding.donorBtn.setOnClickListener {
+            dbRef=FirebaseDatabase.getInstance().getReference("donor")
             editor.putString("choice", "donor")
             editor.apply()
             val i= Intent(this, DonorAuth::class.java)
@@ -36,6 +41,7 @@ class ChoiceActivity : AppCompatActivity() {
         }
 
         binding.hospitalBtn.setOnClickListener {
+            dbRef=FirebaseDatabase.getInstance().getReference("hospital")
             editor.putString("choice", "hospital")
             editor.apply()
             val i= Intent(this, HospitalAuth::class.java)
