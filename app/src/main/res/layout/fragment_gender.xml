@@ -89,6 +89,7 @@
         android:layout_marginTop="20dp">
 
         <RadioButton
+            android:text="male"
             android:id="@+id/male"
             android:layout_width="120dp"
             android:layout_height="120dp"
@@ -102,6 +103,7 @@
 
 
         <RadioButton
+            android:text="female"
             android:id="@+id/female"
             android:layout_width="120dp"
             android:padding="25dp"
