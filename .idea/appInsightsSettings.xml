@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.adas.redconnect" />
+                  <option name="mobileSdkAppId" value="1:917495699984:android:04d38abfa15700d1484895" />
+                  <option name="projectId" value="red-connect-3994a" />
+                  <option name="projectNumber" value="917495699984" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

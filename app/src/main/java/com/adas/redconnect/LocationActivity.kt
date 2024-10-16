@@ -12,9 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.location.LocationManagerCompat.getCurrentLocation
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.adas.redconnect.databinding.ActivityLocationBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -113,7 +110,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
             if(choice == "donor"){
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, UserDetails::class.java)
                 startActivity(intent)
                 finish()
             } else{

@@ -3,26 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/bloodGroupFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.adas.redconnect.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first" >
-
+        android:id="@+id/bloodGroupFragment"
+        android:name="com.adas.redconnect.BloodGroupFragment"
+        android:label="BloodGroupFragment" >
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_bloodGroupFragment_to_genderFragment"
+            app:destination="@id/genderFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.adas.redconnect.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second" >
-
+        android:id="@+id/genderFragment"
+        android:name="com.adas.redconnect.GenderFragment"
+        android:label="GenderFragment" >
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_genderFragment_to_heightFragment"
+            app:destination="@id/heightFragment" />
+        <action
+            android:id="@+id/action_genderFragment_to_bloodGroupFragment"
+            app:destination="@id/bloodGroupFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/heightFragment"
+        android:name="com.adas.redconnect.HeightFragment"
+        android:label="HeightFragment" >
+        <action
+            android:id="@+id/action_heightFragment_to_weightFragment"
+            app:destination="@id/weightFragment" />
+        <action
+            android:id="@+id/action_heightFragment_to_genderFragment"
+            app:destination="@id/genderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weightFragment"
+        android:name="com.adas.redconnect.WeightFragment"
+        android:label="WeightFragment" >
+        <action
+            android:id="@+id/action_weightFragment_to_heightFragment"
+            app:destination="@id/heightFragment" />
     </fragment>
 </navigation>
