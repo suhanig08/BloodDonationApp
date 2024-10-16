@@ -47,6 +47,7 @@ class DonorAuth : AppCompatActivity() {
     enableEdgeToEdge()
     setContentView(binding.root)
 
+    val
     countrycodePicker = binding.ccp
     auth = FirebaseAuth.getInstance()
 

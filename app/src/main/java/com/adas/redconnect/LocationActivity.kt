@@ -108,9 +108,19 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun nextClicked(){
         binding.nxtBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
+            val choice = sharedPreferences.getString("choice", "donor")
+
+
+            if(choice == "donor"){
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else{
+                val intent = Intent(this, OtpActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 

@@ -15,6 +15,9 @@ class ChoiceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
         binding = ActivityChoiceBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -25,13 +28,19 @@ class ChoiceActivity : AppCompatActivity() {
         }
 
         binding.donorBtn.setOnClickListener {
-            val i= Intent(this,DonorAuth::class.java)
+            editor.putString("choice", "donor")
+            editor.apply()
+            val i= Intent(this, DonorAuth::class.java)
             startActivity(i)
+            finish()
         }
 
         binding.hospitalBtn.setOnClickListener {
-            val i= Intent(this,HospitalAuth::class.java)
+            editor.putString("choice", "hospital")
+            editor.apply()
+            val i= Intent(this, HospitalAuth::class.java)
             startActivity(i)
+            finish()
         }
     }
 }
