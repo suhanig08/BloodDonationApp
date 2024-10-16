@@ -66,4 +66,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
 
     implementation ("com.hbb20:ccp:2.5.0")
+
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }
