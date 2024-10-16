@@ -23,6 +23,8 @@ class ChoiceActivity : AppCompatActivity() {
 
         binding = ActivityChoiceBinding.inflate(layoutInflater)
 
+        dbRef=FirebaseDatabase.getInstance().reference
+
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -32,7 +34,7 @@ class ChoiceActivity : AppCompatActivity() {
         }
 
         binding.donorBtn.setOnClickListener {
-            dbRef=FirebaseDatabase.getInstance().getReference("donor")
+            dbRef.child("donor").setValue(true)
             editor.putString("choice", "donor")
             editor.apply()
             val i= Intent(this, DonorAuth::class.java)
@@ -41,7 +43,7 @@ class ChoiceActivity : AppCompatActivity() {
         }
 
         binding.hospitalBtn.setOnClickListener {
-            dbRef=FirebaseDatabase.getInstance().getReference("hospital")
+            dbRef.child("hospital").setValue(true)
             editor.putString("choice", "hospital")
             editor.apply()
             val i= Intent(this, HospitalAuth::class.java)

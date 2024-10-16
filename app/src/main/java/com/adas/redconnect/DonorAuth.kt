@@ -23,6 +23,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,11 +50,14 @@ class DonorAuth : AppCompatActivity() {
     enableEdgeToEdge()
     setContentView(binding.root)
 
-    val
+    dbRef= FirebaseDatabase.getInstance().getReference("donor")
+
     countrycodePicker = binding.ccp
     auth = FirebaseAuth.getInstance()
 
     binding.NextBtn.setOnClickListener {
+        dbRef.child(auth.currentUser!!.uid).child("phone").setValue(binding.phoneEt.text.toString())
+        dbRef.child(auth.currentUser!!.uid).child("name").setValue(binding.nameEt.text.toString())
         val name=binding.nameEt.text
         phNum = binding.phoneEt.text.toString()
         countrycodePicker.registerCarrierNumberEditText(binding.phoneEt)
@@ -62,6 +66,7 @@ class DonorAuth : AppCompatActivity() {
                 val i = Intent(this, OtpActivity::class.java)
                 i.putExtra("phoneNum", countrycodePicker.fullNumberWithPlus)
                 startActivity(i)
+                finish()
         } else {
             if(name.isEmpty()) {
                 binding.nameEt.error="Please enter your name"

@@ -11,8 +11,19 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.adas.redconnect.databinding.ActivityLocationBinding
+import com.adas.redconnect.databinding.FragmentBloodGroupBinding
+import com.adas.redconnect.databinding.FragmentGenderBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class BloodGroupFragment : Fragment() {
+
+    private lateinit var binding: FragmentBloodGroupBinding
+
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var bloodGroupGroup: RadioGroup
     private lateinit var rhFactorGroup: RadioGroup
@@ -22,11 +33,20 @@ class BloodGroupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_blood_group, container, false)
+        binding = FragmentBloodGroupBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         bloodGroupGroup = view.findViewById(R.id.blood_group_radio_group)
         rhFactorGroup = view.findViewById(R.id.rh_factor_radio_group)
         buttonNext = view.findViewById(R.id.button_next)
+
+        auth = FirebaseAuth.getInstance()
+
+        dbRef= FirebaseDatabase.getInstance().getReference("donor")
 
         buttonNext.setOnClickListener {
             val selectedBloodGroupId = bloodGroupGroup.checkedRadioButtonId
@@ -35,6 +55,8 @@ class BloodGroupFragment : Fragment() {
             if (selectedBloodGroupId != -1 && selectedRhFactorId != -1) {
                 val selectedBloodGroup = view.findViewById<RadioButton>(selectedBloodGroupId).text
                 val selectedRhFactor = view.findViewById<RadioButton>(selectedRhFactorId).text
+
+                dbRef.child(auth.currentUser!!.uid).child("bloodgroup").setValue(selectedBloodGroup.toString()+selectedRhFactor.toString())
 
                 // Use the selectedBloodGroup and selectedRhFactor as needed
                 Toast.makeText(
@@ -53,7 +75,5 @@ class BloodGroupFragment : Fragment() {
                 ).show()
             }
         }
-
-        return view
     }
 }
