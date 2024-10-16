@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.database.DatabaseReference
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit
 class DonorAuth : AppCompatActivity() {
     private lateinit var binding: ActivityDonorAuthBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var dbRef: DatabaseReference
     private lateinit var phNum: String
     private lateinit var countrycodePicker: com.hbb20.CountryCodePicker
 
@@ -53,10 +55,9 @@ class DonorAuth : AppCompatActivity() {
 
     binding.NextBtn.setOnClickListener {
         val name=binding.nameEt.text
-        val age=binding.ageEt.text
         phNum = binding.phoneEt.text.toString()
         countrycodePicker.registerCarrierNumberEditText(binding.phoneEt)
-        if (countrycodePicker.isValidFullNumber&&name.isNotEmpty()&&age.isNotEmpty()) {
+        if (countrycodePicker.isValidFullNumber&&name.isNotEmpty()) {
 
                 val i = Intent(this, OtpActivity::class.java)
                 i.putExtra("phoneNum", countrycodePicker.fullNumberWithPlus)
@@ -64,9 +65,6 @@ class DonorAuth : AppCompatActivity() {
         } else {
             if(name.isEmpty()) {
                 binding.nameEt.error="Please enter your name"
-            }
-            if(age.isEmpty()) {
-                binding.ageEt.error="Please enter your age"
             }
             if(binding.phoneEt.text.isEmpty()){
                 binding.phoneEt.error="Please enter your phone number"

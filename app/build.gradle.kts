@@ -74,4 +74,5 @@ dependencies {
     implementation ("com.hbb20:ccp:2.5.0")
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.google.firebase:firebase-database:20.3.0")
 }
