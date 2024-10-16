@@ -54,10 +54,14 @@ class DonorAuth : AppCompatActivity() {
 
     countrycodePicker = binding.ccp
     auth = FirebaseAuth.getInstance()
+    val sharedPreferences = getSharedPreferences("DonorDet", MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
 
     binding.NextBtn.setOnClickListener {
-        dbRef.child(auth.currentUser!!.uid).child("phone").setValue(binding.phoneEt.text.toString())
-        dbRef.child(auth.currentUser!!.uid).child("name").setValue(binding.nameEt.text.toString())
+        editor.putString("name", binding.nameEt.text.toString())
+        editor.apply()
+        dbRef.child(binding.nameEt.text.toString()).child("uid").setValue(auth.currentUser!!.uid)
+        dbRef.child(binding.nameEt.text.toString()).child("phone").setValue(binding.phoneEt.text.toString())
         val name=binding.nameEt.text
         phNum = binding.phoneEt.text.toString()
         countrycodePicker.registerCarrierNumberEditText(binding.phoneEt)

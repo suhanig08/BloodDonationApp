@@ -8,10 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
+import com.adas.redconnect.databinding.FragmentHomeBinding
+import com.adas.redconnect.databinding.FragmentProfileBinding
 import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class ProfileFragment : Fragment() {
+
+    private lateinit var binding: FragmentProfileBinding
+    private lateinit var dbRef: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +32,14 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        dbRef = FirebaseDatabase.getInstance().getReference("donor")
 
         val toggleAvailability: MaterialSwitch = view.findViewById(R.id.toggle_availability)
         val accountInfo: ImageView = view.findViewById(R.id.accInfo)
@@ -37,8 +52,21 @@ class ProfileFragment : Fragment() {
         toggleAvailability.setOnCheckedChangeListener { _, isChecked ->
             // Logic for availability toggle
             if (isChecked) {
+
+                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+                val name=sharedPreferences?.getString("name","")
+                if(name!!.isNotEmpty()) {
+                    dbRef.child(name).child("availaibility")
+                        .setValue(true)
+                }
                 // User is available for donation
             } else {
+                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+                val name=sharedPreferences?.getString("name","")
+                if(name!!.isNotEmpty()) {
+                    dbRef.child(name).child("availaibility")
+                        .setValue(false)
+                }
                 // User is unavailable for donation
             }
         }
@@ -48,16 +76,6 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-        return view
     }
 
-    companion object {
-
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-
-            }
-    }
 }

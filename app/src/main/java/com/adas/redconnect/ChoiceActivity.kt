@@ -13,7 +13,6 @@ import com.google.firebase.database.FirebaseDatabase
 
 class ChoiceActivity : AppCompatActivity() {
     private lateinit var binding:ActivityChoiceBinding
-    private lateinit var dbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +22,6 @@ class ChoiceActivity : AppCompatActivity() {
 
         binding = ActivityChoiceBinding.inflate(layoutInflater)
 
-        dbRef=FirebaseDatabase.getInstance().reference
 
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -34,19 +32,19 @@ class ChoiceActivity : AppCompatActivity() {
         }
 
         binding.donorBtn.setOnClickListener {
-            dbRef.child("donor").setValue(true)
             editor.putString("choice", "donor")
             editor.apply()
             val i= Intent(this, DonorAuth::class.java)
+            i.putExtra("role","donor")
             startActivity(i)
             finish()
         }
 
         binding.hospitalBtn.setOnClickListener {
-            dbRef.child("hospital").setValue(true)
             editor.putString("choice", "hospital")
             editor.apply()
             val i= Intent(this, HospitalAuth::class.java)
+            i.putExtra("role","hospital")
             startActivity(i)
             finish()
         }

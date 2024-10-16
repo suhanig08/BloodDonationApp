@@ -75,6 +75,7 @@
         android:layout_gravity="center"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:inputType="number"
         android:hint="Enter your height in cm"/>
     <Button
         android:id="@+id/button_next"
