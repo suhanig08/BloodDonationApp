@@ -2,22 +2,19 @@ package com.adas.redconnect
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Im
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
-import androidx.navigation.fragment.findNavController
-import com.adas.redconnect.databinding.FragmentHomeBinding
+import androidx.fragment.app.Fragment
 import com.adas.redconnect.databinding.FragmentProfileBinding
+import com.bumptech.glide.Glide
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-
 
 class ProfileFragment : Fragment() {
 
@@ -25,17 +22,10 @@ class ProfileFragment : Fragment() {
     private lateinit var dbRef: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,103 +36,84 @@ class ProfileFragment : Fragment() {
         dbRef = FirebaseDatabase.getInstance().getReference("donor")
         auth = FirebaseAuth.getInstance()
 
+        // Load profile image URL and display it
+        dbRef.child(auth.currentUser!!.uid).child("profileUrl").get()
+            .addOnSuccessListener { snapshot ->
+                val url = snapshot.value as? String
+                if (!url.isNullOrEmpty()) {
+                    Glide.with(this).load(url).into(binding.profileImage)
+                } else {
+                    Glide.with(this).load(R.drawable.img).into(binding.profileImage)
+                }
+            }
+            .addOnFailureListener {
+                Glide.with(this).load(R.drawable.img).into(binding.profileImage)
+            }
+
+
+        // Load other profile details
+        loadProfileData()
+
+        // Logout button functionality
         binding.logoutBtn.setOnClickListener {
             signOut()
         }
 
+        // Handle toggle availability switch
+        val toggleAvailability: MaterialSwitch = view.findViewById(R.id.toggle_availability)
+        toggleAvailability.setOnCheckedChangeListener { _, isChecked ->
+            dbRef.child(auth.currentUser!!.uid).child("availability").setValue(isChecked)
+        }
+
+        // Navigate to account info fragment
+        binding.accInfo.setOnClickListener {
+            val accInfoFrag = account_InfoFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.profileFragment, accInfoFrag).addToBackStack(null).commit()
+        }
+    }
+
+    private fun loadProfileData() {
+        // Load name
         dbRef.child(auth.currentUser!!.uid).child("name").get().addOnSuccessListener { snapshot ->
-              if (snapshot.exists()) {
-                val bloodGroup = snapshot.value.toString()
-                binding.profileName.text = bloodGroup
+            if (snapshot.exists()) {
+                binding.profileName.text = snapshot.value.toString()
             } else {
-                binding.profileName.text = "N/A" // Or some placeholder text
+                binding.profileName.text = "N/A" // Placeholder text
             }
         }.addOnFailureListener {
-            binding.profileName.text = "Error" // In case of any errors
+            binding.profileName.text = "Error" // In case of error
         }
 
-        dbRef.child(auth.currentUser!!.uid).child("bloodgroup").get()
-            .addOnSuccessListener { snapshot ->
-                if (snapshot.exists()) {
-                    val bloodGroup = snapshot.value.toString()
-                    binding.tvBloodGrp.text = bloodGroup
-                } else {
-                    binding.tvBloodGrp.text = "N/A" // Or some placeholder text
-                }
-            }.addOnFailureListener {
-            binding.tvBloodGrp.text = "Error" // In case of any errors
-        }
-
-        dbRef.child(auth.currentUser!!.uid).child("dateDonated").get()
-            .addOnSuccessListener { snapshot ->
-                if (snapshot.exists()) {
-                    val date = snapshot.value.toString()
-                    binding.lastDonation.text = date
-                } else {
-                    binding.lastDonation.text = "N/A" // Or some placeholder text
-                }
-            }.addOnFailureListener {
-            binding.lastDonation.text = "Error" // In case of any errors
-        }
-
-        val toggleAvailability: MaterialSwitch = view.findViewById(R.id.toggle_availability)
-        val accountInfo: LinearLayout = view.findViewById(R.id.accInfo)
-        val donorHistory: ImageView = view.findViewById(R.id.donationHistory)
-        val manageAddress: ImageView = view.findViewById(R.id.manageAddress)
-        val settings: ImageView = view.findViewById(R.id.settings)
-
-
-        // Handle toggle availability switch
-        toggleAvailability.setOnCheckedChangeListener { _, isChecked ->
-            // Logic for availability toggle
-            if (isChecked) {
-
-
-                dbRef.child(auth.currentUser!!.uid).child("availability")
-                    .setValue(true)
-                // User is available for donation
+        // Load blood group
+        dbRef.child(auth.currentUser!!.uid).child("bloodGroup").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                binding.tvBloodGrp.text = snapshot.value.toString()
             } else {
-                dbRef.child(auth.currentUser!!.uid).child("availability")
-                    .setValue(false)
+                binding.tvBloodGrp.text = "N/A"
             }
-            // User is unavailable for donation
+        }.addOnFailureListener {
+            binding.tvBloodGrp.text = "Error"
         }
 
-            accountInfo.setOnClickListener {
-                val accInfoFrag = account_InfoFragment()
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.profileFragment, accInfoFrag).addToBackStack(null).commit()
+        // Load last donation date
+        dbRef.child(auth.currentUser!!.uid).child("dateDonated").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                binding.lastDonation.text = snapshot.value.toString()
+            } else {
+                binding.lastDonation.text = "N/A"
             }
-
+        }.addOnFailureListener {
+            binding.lastDonation.text = "Error"
+        }
     }
-        
-//        val hospitalId = "test"
-//        val appointmentId = "test"
-//
-//        settings.setOnClickListener {
-//            // Assuming you have the hospitalId and appointmentId
-//            val chatFragment = ChatFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString("hospitalId", hospitalId)
-//                    putString("appointmentId", appointmentId)
-//                }
-//            }
-//
-//            // Replace the current fragment with ChatFragment
-//            requireActivity().supportFragmentManager.beginTransaction()
-//                .replace(R.id.profileFragment, chatFragment)
-//                .addToBackStack(null)
-//                .commit()
-//        }
 
     private fun signOut() {
         val sharedPreferences = activity?.getSharedPreferences("ChoicePref", MODE_PRIVATE)
         val editor = sharedPreferences?.edit()
-        editor?.putBoolean("isLoggedIn",false)
-            ?.apply()
-        val i=Intent(context,ChoiceActivity::class.java)
-        startActivity(i)
+        editor?.putBoolean("isLoggedIn", false)?.apply()
+        val intent = Intent(context, ChoiceActivity::class.java)
+        startActivity(intent)
         activity?.finish()
     }
-
 }
