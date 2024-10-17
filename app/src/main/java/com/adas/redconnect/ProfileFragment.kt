@@ -50,6 +50,25 @@ class ProfileFragment : Fragment() {
 
         }
 
+//        val hospitalId = "test"
+//        val appointmentId = "test"
+//
+//        settings.setOnClickListener {
+//            // Assuming you have the hospitalId and appointmentId
+//            val chatFragment = ChatFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString("hospitalId", hospitalId)
+//                    putString("appointmentId", appointmentId)
+//                }
+//            }
+//
+//            // Replace the current fragment with ChatFragment
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.profileFragment, chatFragment)
+//                .addToBackStack(null)
+//                .commit()
+//        }
+
         return view
     }
 

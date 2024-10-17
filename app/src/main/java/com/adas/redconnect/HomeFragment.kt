@@ -5,27 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var addAppt : EditText
+    private lateinit var appointmentsAdapter: AppointmentsAdapter
+    private lateinit var appointmentsList: MutableList<Appointment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -33,8 +34,66 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        database = FirebaseDatabase.getInstance()
+        auth = FirebaseAuth.getInstance()
+
+        recyclerView = view.findViewById(R.id.appointmentsRv)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        appointmentsList = mutableListOf()
+        appointmentsAdapter = AppointmentsAdapter(appointmentsList)
+        recyclerView.adapter = appointmentsAdapter
+
+        //addAppt = view.findViewById(R.id.addAppointment)
+
+        loadMessages()
+
+//        addAppt.setOnClickListener {
+//            sendMessage("Hello")
+//        }
+
+        return view
+    }
+
+    // Function to load appointments from Firebase
+    private fun loadMessages() {
+        val appointmentsRef = database.getReference("appointments")
+
+        appointmentsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                appointmentsList.clear()
+                for (messageSnapshot in snapshot.children) {
+                    val message = messageSnapshot.getValue(Appointment::class.java)
+                    message?.let { appointmentsList.add(it) }
+                }
+                appointmentsAdapter.notifyDataSetChanged()
+                recyclerView.scrollToPosition(appointmentsList.size - 1)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle possible errors here
+            }
+        })
+    }
+
+    private fun sendMessage(messageText: String) {
+
+        auth = FirebaseAuth.getInstance()
+        val appointmentsRef = database.getReference("appointments")
+        val appointmentId = appointmentsRef.push().key ?: return
+        val appointment = Appointment(
+            hospitalId = "",
+            donorId = auth.currentUser?.uid ?: "x",
+            hospitalName = "",
+            msg = "HELLO WORLD :) ",
+            donorBloodType = "xx",
+            timestamp = System.currentTimeMillis().toString()
+        )
+
+        // Save message to Firebase
+        appointmentsRef.child(appointmentId).setValue(appointment)
     }
 
     companion object {
@@ -51,8 +110,7 @@ class HomeFragment : Fragment() {
         fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }

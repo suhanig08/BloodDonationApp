@@ -178,8 +178,7 @@
                         android:layout_weight="1"
                         android:text="Account Information"
 
-                        android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/accInfo"
@@ -215,8 +214,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Donation History"
-                        android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/donationHistory"
@@ -252,8 +250,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Manage Addresses"
-                        android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/manageAddress"
@@ -289,8 +286,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Settings"
-                        android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/settings"
