@@ -22,6 +22,8 @@ class HomeFragment : Fragment() {
     private lateinit var addAppt : EditText
     private lateinit var appointmentsAdapter: AppointmentsAdapter
     private lateinit var appointmentsList: MutableList<Appointment>
+    private var homeBinding : FragmentHomeBinding? = null
+    private val binding get() = homeBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,17 +36,17 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        recyclerView = view.findViewById(R.id.appointmentsRv)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
 
         appointmentsList = mutableListOf()
         appointmentsAdapter = AppointmentsAdapter(appointmentsList)
-        recyclerView.adapter = appointmentsAdapter
+        binding.appointmentsRv.adapter = appointmentsAdapter
 
         //addAppt = view.findViewById(R.id.addAppointment)
 
@@ -54,7 +56,30 @@ class HomeFragment : Fragment() {
 //            sendMessage("Hello")
 //        }
 
-        return view
+        return binding.root
+    }
+   
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        dbRef=FirebaseDatabase.getInstance().getReference("donor")
+
+        val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+        val name=sharedPreferences?.getString("name","")
+
+        binding.userName.setText("Hi, ${name}")
+
+        dbRef.child(name.toString()).child("bloodgroup").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val bloodGroup = snapshot.value.toString()
+                binding.userBloodGrp.text = bloodGroup
+            } else {
+                binding.userBloodGrp.text = "N/A" // Or some placeholder text
+              }
+        }.addOnFailureListener {
+            binding.userBloodGrp.text = "Error" // In case of any errors
+        }
+
     }
 
     // Function to load appointments from Firebase
@@ -95,23 +120,5 @@ class HomeFragment : Fragment() {
         // Save message to Firebase
         appointmentsRef.child(appointmentId).setValue(appointment)
     }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
+            
 }

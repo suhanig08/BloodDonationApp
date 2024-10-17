@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.concurrent.TimeUnit
 
 class OtpActivity : AppCompatActivity() {
@@ -27,6 +29,7 @@ class OtpActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var timeOutSeconds = 60L
     private lateinit var verificationCode: String
+    private lateinit var phNum:String
     private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +43,10 @@ class OtpActivity : AppCompatActivity() {
             insets
         }
 
+        //val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
         auth = FirebaseAuth.getInstance()
-        val phNum = intent.getStringExtra("phoneNum")
+        phNum = intent.getStringExtra("phoneNum").toString()
         Log.e("phoneNum", phNum.toString())
         sendOtp(phNum!!, false)
 
@@ -49,12 +54,22 @@ class OtpActivity : AppCompatActivity() {
         setupOtpInputs()
 
         binding.NextBtn.setOnClickListener {
-            val enteredOtp = binding.otpBox1.text.toString() + binding.otpBox2.text.toString() +
-                    binding.otpBox3.text.toString() +
-                    binding.otpBox4.text.toString() + binding.otpBox5.text.toString() + binding.otpBox6.text.toString()
-            val credential = PhoneAuthProvider.getCredential(verificationCode, enteredOtp)
-            signInWithPhoneAuthCredential(credential)
-            setInProgress(true)
+            if(binding.otpBox1.text.isEmpty()||binding.otpBox2.text.isEmpty()||binding.otpBox3.text.isEmpty()||
+                binding.otpBox4.text.isEmpty()||binding.otpBox5.text.isEmpty()||binding.otpBox6.text.isEmpty()){
+                Toast.makeText(this, "Please enter the otp", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val enteredOtp = binding.otpBox1.text.toString() + binding.otpBox2.text.toString() +
+                        binding.otpBox3.text.toString() +
+                        binding.otpBox4.text.toString() + binding.otpBox5.text.toString() + binding.otpBox6.text.toString()
+                val credential = PhoneAuthProvider.getCredential(verificationCode, enteredOtp)
+                val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("isLoggedIn",true)
+                    .apply()
+                signInWithPhoneAuthCredential(credential)
+                setInProgress(true)
+            }
         }
 
         binding.resendTv.setOnClickListener {
@@ -146,6 +161,7 @@ class OtpActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val i = Intent(this, LocationActivity::class.java)
                     startActivity(i)
+                    finish()
                 } else {
                     Toast.makeText(this, "OTP Verification Failed", Toast.LENGTH_SHORT).show()
                 }

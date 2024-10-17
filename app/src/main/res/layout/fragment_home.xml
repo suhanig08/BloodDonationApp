@@ -54,9 +54,10 @@
             android:elevation="4dp">
 
             <TextView
+                android:id="@+id/userBloodGrp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="B+"
+                android:text=""
                 android:fontFamily="@font/inter_sb"
                 android:textColor="@color/redPrimary"
                 android:textSize="28sp"

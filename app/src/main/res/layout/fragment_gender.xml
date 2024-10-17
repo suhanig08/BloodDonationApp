@@ -1,0 +1,134 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="20dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="26dp">
+
+        <View
+            android:layout_width="75dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator_active" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="75dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator_active" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="75dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="75dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator" />
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="75dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator" />
+    </LinearLayout>
+
+    <!-- Title -->
+    <TextView
+        android:layout_marginTop="50dp"
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Your Gender"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="185dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="MALE"/>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:text="      FEMALE"/>
+
+    </LinearLayout>
+    <RadioGroup
+        android:id="@+id/gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+
+        <RadioButton
+            android:text="male"
+            android:id="@+id/male"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginEnd="45dp"
+            android:gravity="center"
+            android:button="@null"
+            android:padding="25dp"
+            android:background="@drawable/button_background"
+            android:drawableTop="@drawable/male_symbol_icon" />
+
+
+
+        <RadioButton
+            android:text="female"
+            android:id="@+id/female"
+            android:layout_width="120dp"
+            android:padding="25dp"
+            android:layout_height="120dp"
+            android:gravity="center"
+            android:button="@null"
+            android:drawableTop="@drawable/female_symbol_icon"
+            android:background="@drawable/button_background" />
+    </RadioGroup>
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="70dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="160dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/red"
+        android:drawableTop="@drawable/baseline_navigate_next_24" />
+
+
+</LinearLayout>
