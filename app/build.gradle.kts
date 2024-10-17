@@ -86,15 +86,15 @@ dependencies {
     implementation (libs.firebase.firestore.v2470)
     implementation (libs.firebase.messaging)
     implementation (libs.android.volley)
-    implementation (libs.google.google.auth.library.oauth2.http)
     implementation (libs.kotlinx.coroutines.core)
     implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.dexter)
+    implementation(libs.google.auth.library.oauth2.http.v1190)
 
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.firebase:firebase-database:20.3.0")
 
-    implementation("com.github.dhaval2404:imagepicker:2.1")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
 }

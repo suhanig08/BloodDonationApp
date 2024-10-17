@@ -161,9 +161,7 @@ class OtpActivity : AppCompatActivity() {
         val age = sharedPreferences.getString("age", "N/A")
         val phone= sharedPreferences.getString("phone", "N/A")
 
-        dbRef.child(auth.currentUser!!.uid).child("name").setValue(name)
-        dbRef.child(auth.currentUser!!.uid).child("phone").setValue(phone)
-        dbRef.child(auth.currentUser!!.uid).child("age").setValue(age)
+//        \
 
         setInProgress(true)
         auth.signInWithCredential(credential)
