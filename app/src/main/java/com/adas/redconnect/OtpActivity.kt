@@ -43,6 +43,8 @@ class OtpActivity : AppCompatActivity() {
             insets
         }
 
+        //val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
         auth = FirebaseAuth.getInstance()
         phNum = intent.getStringExtra("phoneNum").toString()
         Log.e("phoneNum", phNum.toString())
@@ -52,12 +54,22 @@ class OtpActivity : AppCompatActivity() {
         setupOtpInputs()
 
         binding.NextBtn.setOnClickListener {
-            val enteredOtp = binding.otpBox1.text.toString() + binding.otpBox2.text.toString() +
-                    binding.otpBox3.text.toString() +
-                    binding.otpBox4.text.toString() + binding.otpBox5.text.toString() + binding.otpBox6.text.toString()
-            val credential = PhoneAuthProvider.getCredential(verificationCode, enteredOtp)
-            signInWithPhoneAuthCredential(credential)
-            setInProgress(true)
+            if(binding.otpBox1.text.isEmpty()||binding.otpBox2.text.isEmpty()||binding.otpBox3.text.isEmpty()||
+                binding.otpBox4.text.isEmpty()||binding.otpBox5.text.isEmpty()||binding.otpBox6.text.isEmpty()){
+                Toast.makeText(this, "Please enter the otp", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val enteredOtp = binding.otpBox1.text.toString() + binding.otpBox2.text.toString() +
+                        binding.otpBox3.text.toString() +
+                        binding.otpBox4.text.toString() + binding.otpBox5.text.toString() + binding.otpBox6.text.toString()
+                val credential = PhoneAuthProvider.getCredential(verificationCode, enteredOtp)
+                val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("isLoggedIn",true)
+                    .apply()
+                signInWithPhoneAuthCredential(credential)
+                setInProgress(true)
+            }
         }
 
         binding.resendTv.setOnClickListener {

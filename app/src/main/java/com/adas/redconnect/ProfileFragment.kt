@@ -42,6 +42,10 @@ class ProfileFragment : Fragment() {
 
         dbRef = FirebaseDatabase.getInstance().getReference("donor")
 
+        binding.logoutBtn.setOnClickListener {
+            signOut()
+        }
+
 
         val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
         val name=sharedPreferences?.getString("name","")
@@ -97,6 +101,13 @@ class ProfileFragment : Fragment() {
 
         }
 
+    }
+
+    private fun signOut() {
+        val sharedPreferences = activity?.getSharedPreferences("ChoicePref", MODE_PRIVATE)
+        val editor = sharedPreferences?.edit()
+        editor?.putBoolean("isLoggedIn",false)
+            ?.apply()
     }
 
 }
