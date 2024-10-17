@@ -7,12 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.adas.redconnect.databinding.ActivityChoiceBinding
-import com.adas.redconnect.databinding.ActivityDonorAuthBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 class ChoiceActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityChoiceBinding
+    private lateinit var binding: ActivityChoiceBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +17,20 @@ class ChoiceActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
+        // Check if the user is already logged in
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        if (isLoggedIn) {
+            // If the user is already logged in, navigate to MainActivity
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
+
+        // If not logged in, proceed with the usual setup
         binding = ActivityChoiceBinding.inflate(layoutInflater)
-
-
         enableEdgeToEdge()
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -34,8 +40,7 @@ class ChoiceActivity : AppCompatActivity() {
         binding.donorBtn.setOnClickListener {
             editor.putString("choice", "donor")
             editor.apply()
-            val i= Intent(this, DonorAuth::class.java)
-            i.putExtra("role","donor")
+            val i = Intent(this, DonorAuth::class.java)
             startActivity(i)
             finish()
         }
@@ -43,8 +48,7 @@ class ChoiceActivity : AppCompatActivity() {
         binding.hospitalBtn.setOnClickListener {
             editor.putString("choice", "hospital")
             editor.apply()
-            val i= Intent(this, HospitalAuth::class.java)
-            i.putExtra("role","hospital")
+            val i = Intent(this, HospitalAuth::class.java)
             startActivity(i)
             finish()
         }
