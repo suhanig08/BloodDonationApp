@@ -112,10 +112,7 @@ class ProfileFragment : Fragment() {
                 val accInfoFrag = account_InfoFragment()
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.profileFragment, accInfoFrag).addToBackStack(null).commit()
-
             }
-
-
 
     }
         
