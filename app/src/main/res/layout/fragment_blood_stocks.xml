@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.BloodStocksFragment">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bloodStockRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/each_blood_stock"
+        android:layout_margin="15dp"/>
+</FrameLayout>

@@ -2,11 +2,10 @@ package com.adas.redconnect.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.adas.redconnect.databinding.EachUserBinding
-import com.adas.redconnect.firebaseData.User
+import com.adas.redconnect.data.User
 
 class UserAdapter(val context: Context, val userList: ArrayList<User>) : RecyclerView
     .Adapter<UserAdapter

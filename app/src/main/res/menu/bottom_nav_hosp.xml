@@ -6,10 +6,12 @@
         android:icon="@drawable/home_icon"/>
     <item
         android:title="Request"
-        android:id="@+id/request"/>
-
+        android:id="@+id/request"
+        android:icon="@drawable/request_blood_u"/>
     <item
-        android:title="Chat"
-        android:id="@+id/chat"/>
+        android:title="Appointments"
+        android:id="@+id/appointments"
+        android:icon="@drawable/appointment"/>
+
 
 </menu>

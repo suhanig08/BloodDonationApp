@@ -9,9 +9,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
 import com.adas.redconnect.databinding.ActivityHospitalAuthBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class HospitalAuth : AppCompatActivity() {
     private lateinit var binding: ActivityHospitalAuthBinding
+    private lateinit var dbRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,6 +25,8 @@ class HospitalAuth : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        dbRef = FirebaseDatabase.getInstance().getReference()
 
         binding.hospNameEt.doOnTextChanged { text, start, before, count ->
             if(text.toString().trim().isEmpty()){
@@ -36,8 +41,9 @@ class HospitalAuth : AppCompatActivity() {
         }
 
         binding.nextBtn.setOnClickListener {
-            val intent = Intent(this, LocationActivity::class.java)
-            startActivity(intent)
+            val i = Intent(this, LocationActivity::class.java)
+            i.putExtra("hospitalName", binding.hospNameEt.text.toString())
+            startActivity(i)
             finish()
         }
         
