@@ -18,6 +18,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    packagingOptions {
+        // Exclude duplicate files
+        exclude ("META-INF/DEPENDENCIES")
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -83,4 +88,8 @@ dependencies {
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.firebase:firebase-database:20.3.0")
+
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

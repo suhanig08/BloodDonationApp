@@ -106,17 +106,15 @@ class ProfileFragment : Fragment() {
                     .setValue(false)
             }
             // User is unavailable for donation
+        }
 
 
             accountInfo.setOnClickListener {
                 val accInfoFrag = account_InfoFragment()
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.profileFragment, accInfoFrag).addToBackStack(null).commit()
-
             }
 
-
-        }
     }
         
 //        val hospitalId = "test"

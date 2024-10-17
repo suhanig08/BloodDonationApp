@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var dbRef: DatabaseReference
     private lateinit var auth: FirebaseAuth
-    private lateinit var recyclerView: RecyclerView
+    //private lateinit var recyclerView: RecyclerView
     private lateinit var addAppt : EditText
     private lateinit var appointmentsAdapter: AppointmentsAdapter
     private lateinit var appointmentsList: MutableList<Appointment>
@@ -105,7 +105,7 @@ class HomeFragment : Fragment() {
                     message?.let { appointmentsList.add(it) }
                 }
                 appointmentsAdapter.notifyDataSetChanged()
-                recyclerView.scrollToPosition(appointmentsList.size - 1)
+                //recyclerView.scrollToPosition(appointmentsList.size - 1)
             }
 
             override fun onCancelled(error: DatabaseError) {
