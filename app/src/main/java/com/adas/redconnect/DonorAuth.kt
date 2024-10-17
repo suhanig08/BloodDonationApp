@@ -40,6 +40,7 @@ class DonorAuth : AppCompatActivity() {
         editor.apply()
         dbRef.child(binding.nameEt.text.toString()).child("uid").setValue(auth.currentUser!!.uid)
         dbRef.child(binding.nameEt.text.toString()).child("phone").setValue(binding.phoneEt.text.toString())
+        dbRef.child(binding.nameEt.text.toString()).child("age").setValue(binding.ageEt.text.toString())
         val name=binding.nameEt.text
         phNum = binding.phoneEt.text.toString()
         countrycodePicker.registerCarrierNumberEditText(binding.phoneEt)

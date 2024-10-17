@@ -53,6 +53,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mm : Marker? = null
     private var hospName: String = ""
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
