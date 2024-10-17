@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adas.redconnect.R
 import com.adas.redconnect.adapters.UserAdapter
 import com.adas.redconnect.databinding.FragmentHospitalChatBinding
-import com.adas.redconnect.firebaseData.User
+import com.adas.redconnect.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -21,9 +20,6 @@ class HospitalChatFragment : Fragment() {
     private lateinit var dbRef: DatabaseReference
     private var hospitalChatBinding: FragmentHospitalChatBinding? = null
     private val binding get() = hospitalChatBinding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +35,6 @@ class HospitalChatFragment : Fragment() {
 
         userList = ArrayList()
         adapter = UserAdapter(requireContext(), userList)
-
         mAuth = FirebaseAuth.getInstance()
         dbRef = FirebaseDatabase.getInstance().getReference()
 

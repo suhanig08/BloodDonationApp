@@ -39,8 +39,9 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
+    private lateinit var hospDbRef: DatabaseReference
+    private var uid: String? = null
     private lateinit var editor:SharedPreferences.Editor
-
     private lateinit var binding: ActivityLocationBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -50,16 +51,23 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private var currLong by Delegates.notNull<Double>()
     private lateinit var searchLatlng : LatLng
     private var mm : Marker? = null
+    private lateinit var hospName: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+
 
         binding = ActivityLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        uid = auth.currentUser?.uid
 
         dbRef= FirebaseDatabase.getInstance().getReference("donor")
+        hospDbRef = FirebaseDatabase.getInstance().getReference()
+        hospName = intent.getStringExtra("hospitalName")!!
 
 
         if(!Places.isInitialized()){
@@ -135,7 +143,11 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
                 startActivity(intent)
                 finish()
             } else{
-                val intent = Intent(this, OtpActivity::class.java)
+                val intent = Intent(this, HospitalMainActivity::class.java)
+                hospDbRef.child("hospital").child(hospName).child("address").setValue(binding
+                    .locationTv
+                    .text.toString())
+                hospDbRef.child("hospital").child(hospName).child("uid").setValue(uid)
                 startActivity(intent)
                 finish()
             }

@@ -56,7 +56,7 @@ class ProfileFragment : Fragment() {
                 val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
                 val name=sharedPreferences?.getString("name","")
                 if(name!!.isNotEmpty()) {
-                    dbRef.child(name).child("availaibility")
+                    dbRef.child(name).child("availability")
                         .setValue(true)
                 }
                 // User is available for donation
@@ -64,7 +64,7 @@ class ProfileFragment : Fragment() {
                 val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
                 val name=sharedPreferences?.getString("name","")
                 if(name!!.isNotEmpty()) {
-                    dbRef.child(name).child("availaibility")
+                    dbRef.child(name).child("availability")
                         .setValue(false)
                 }
                 // User is unavailable for donation

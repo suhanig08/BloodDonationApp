@@ -3,10 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="redPrimary">#e41715</color>
-    <color name="darkGrey">#1d1a1b</color>
+    <color name="darkGrey">#191919</color>
     <color name="lightGrey">#9B9898</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="hintColor">#6B6B6B</color>
     <color name="grey">#6A6969</color>
     <color name="red">#F23B3B</color>
+    <color name="lightRed">#F36665</color>
 </resources>
