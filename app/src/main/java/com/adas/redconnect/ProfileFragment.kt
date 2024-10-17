@@ -100,8 +100,25 @@ class ProfileFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.profileFragment,accInfoFrag).addToBackStack(null).commit()
 
         }
-
-    }
+        
+//        val hospitalId = "test"
+//        val appointmentId = "test"
+//
+//        settings.setOnClickListener {
+//            // Assuming you have the hospitalId and appointmentId
+//            val chatFragment = ChatFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString("hospitalId", hospitalId)
+//                    putString("appointmentId", appointmentId)
+//                }
+//            }
+//
+//            // Replace the current fragment with ChatFragment
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.profileFragment, chatFragment)
+//                .addToBackStack(null)
+//                .commit()
+//        }
 
     private fun signOut() {
         val sharedPreferences = activity?.getSharedPreferences("ChoicePref", MODE_PRIVATE)

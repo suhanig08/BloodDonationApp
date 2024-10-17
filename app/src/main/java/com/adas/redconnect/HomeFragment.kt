@@ -5,29 +5,60 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
-import com.adas.redconnect.databinding.FragmentHeightBinding
-import com.adas.redconnect.databinding.FragmentHomeBinding
+import android.widget.EditText
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.values
+import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
 
-    private lateinit var dbRef:DatabaseReference
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var addAppt : EditText
+    private lateinit var appointmentsAdapter: AppointmentsAdapter
+    private lateinit var appointmentsList: MutableList<Appointment>
+    private var homeBinding : FragmentHomeBinding? = null
+    private val binding get() = homeBinding!!
 
-    private lateinit var binding: FragmentHomeBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        database = FirebaseDatabase.getInstance()
+        auth = FirebaseAuth.getInstance()
+
+        binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
+
+        appointmentsList = mutableListOf()
+        appointmentsAdapter = AppointmentsAdapter(appointmentsList)
+        binding.appointmentsRv.adapter = appointmentsAdapter
+
+        //addAppt = view.findViewById(R.id.addAppointment)
+
+        loadMessages()
+
+//        addAppt.setOnClickListener {
+//            sendMessage("Hello")
+//        }
+
         return binding.root
     }
-
+   
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,10 +75,50 @@ class HomeFragment : Fragment() {
                 binding.userBloodGrp.text = bloodGroup
             } else {
                 binding.userBloodGrp.text = "N/A" // Or some placeholder text
-            }
+              }
         }.addOnFailureListener {
             binding.userBloodGrp.text = "Error" // In case of any errors
         }
 
     }
+
+    // Function to load appointments from Firebase
+    private fun loadMessages() {
+        val appointmentsRef = database.getReference("appointments")
+
+        appointmentsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                appointmentsList.clear()
+                for (messageSnapshot in snapshot.children) {
+                    val message = messageSnapshot.getValue(Appointment::class.java)
+                    message?.let { appointmentsList.add(it) }
+                }
+                appointmentsAdapter.notifyDataSetChanged()
+                recyclerView.scrollToPosition(appointmentsList.size - 1)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle possible errors here
+            }
+        })
+    }
+
+    private fun sendMessage(messageText: String) {
+
+        auth = FirebaseAuth.getInstance()
+        val appointmentsRef = database.getReference("appointments")
+        val appointmentId = appointmentsRef.push().key ?: return
+        val appointment = Appointment(
+            hospitalId = "",
+            donorId = auth.currentUser?.uid ?: "x",
+            hospitalName = "",
+            msg = "HELLO WORLD :) ",
+            donorBloodType = "xx",
+            timestamp = System.currentTimeMillis().toString()
+        )
+
+        // Save message to Firebase
+        appointmentsRef.child(appointmentId).setValue(appointment)
+    }
+            
 }

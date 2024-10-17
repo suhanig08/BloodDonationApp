@@ -70,6 +70,7 @@ dependencies {
     
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.firebase:firebase-database-ktx")
 
     implementation ("com.hbb20:ccp:2.5.0")
 
