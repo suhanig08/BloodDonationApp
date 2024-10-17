@@ -106,7 +106,7 @@ class ProfileFragment : Fragment() {
                     .setValue(false)
             }
             // User is unavailable for donation
-
+        }
 
             accountInfo.setOnClickListener {
                 val accInfoFrag = account_InfoFragment()
@@ -116,7 +116,7 @@ class ProfileFragment : Fragment() {
             }
 
 
-        }
+
     }
         
 //        val hospitalId = "test"
