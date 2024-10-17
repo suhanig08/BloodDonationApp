@@ -30,7 +30,7 @@ class HospitalMainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.home ->replaceFragment(HospitalHomeFragment())
-                R.id.request ->replaceFragment(RequestFragment())
+                R.id.request ->replaceFragment(RequestBloodFragment())
                 R.id.appointments ->replaceFragment(AppointmentFragment())
 
                 else->{
