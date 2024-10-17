@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/profileFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/darkGrey"
     tools:context=".ProfileFragment">
 
 
@@ -50,6 +51,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="-28dp"
+                    app:cardBackgroundColor="#292929"
                     >
 
                     <LinearLayout
@@ -76,7 +78,7 @@
                                 android:id="@+id/tv_bloodGrp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="B+"
+                                android:text=""
                                 android:textColor="@color/redPrimary"
                                 android:textStyle="bold"
                                 android:textSize="16sp"
@@ -124,7 +126,7 @@
                                 android:id="@+id/lastDonation"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="20 Jan"
+                                android:text=""
                                 android:textColor="@color/redPrimary"
                                 android:textStyle="bold"
                                 android:textSize="16sp"
@@ -180,12 +182,13 @@
                         android:text="Account Information"
 
                         android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/places_text_white_alpha_87" />
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/arrow_right" />
+                        android:src="@drawable/arrow_right"
+                        />
                 </LinearLayout>
 
                 <!-- Divider -->
@@ -216,7 +219,7 @@
                         android:layout_weight="1"
                         android:text="Donation History"
                         android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/places_text_white_alpha_87" />
 
                     <ImageView
                         android:id="@+id/donationHistory"
@@ -253,7 +256,7 @@
                         android:layout_weight="1"
                         android:text="Manage Addresses"
                         android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/places_text_white_alpha_87" />
 
                     <ImageView
                         android:id="@+id/manageAddress"
@@ -281,16 +284,16 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/address"
+                        android:src="@drawable/logout"
                         android:layout_marginEnd="16dp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Settings"
+                        android:text="Logout"
                         android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/places_text_white_alpha_87" />
 
                     <ImageView
                         android:id="@+id/settings"
