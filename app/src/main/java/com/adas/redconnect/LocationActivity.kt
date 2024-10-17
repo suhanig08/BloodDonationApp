@@ -116,8 +116,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun nextBtnEnabled() {
-            dbRef.child(auth.currentUser!!.uid).child("address")
-                .setValue(binding.locationTv.text.toString())
+//        dbRef.child(auth.currentUser!!.uid).child("address")
+//                .setValue(binding.locationTv.text.toString())
 
         Log.i("locationTv", binding.locationTv.text.toString())
         binding.nxtBtn.alpha = 1.0F

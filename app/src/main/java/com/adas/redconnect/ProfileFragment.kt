@@ -108,7 +108,6 @@ class ProfileFragment : Fragment() {
             // User is unavailable for donation
         }
 
-
             accountInfo.setOnClickListener {
                 val accInfoFrag = account_InfoFragment()
                 requireActivity().supportFragmentManager.beginTransaction()
