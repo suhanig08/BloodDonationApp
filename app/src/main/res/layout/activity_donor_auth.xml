@@ -59,9 +59,10 @@
             android:layout_marginRight="25dp"
             android:background="@drawable/edit_text_border"
             android:hint="Name"
+            android:singleLine="true"
             android:textSize="15sp"
             android:padding="10dp"
-            android:textColorHint="@color/hintColor" />
+            android:textColorHint="@color/hintColor"/>
 
         <EditText
             android:id="@+id/ageEt"
