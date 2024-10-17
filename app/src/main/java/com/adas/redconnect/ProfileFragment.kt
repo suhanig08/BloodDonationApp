@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import com.adas.redconnect.databinding.FragmentHomeBinding
 import com.adas.redconnect.databinding.FragmentProfileBinding
@@ -41,8 +42,27 @@ class ProfileFragment : Fragment() {
 
         dbRef = FirebaseDatabase.getInstance().getReference("donor")
 
+
+        val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+        val name=sharedPreferences?.getString("name","")
+
+        binding.profileName.text=name
+
+        dbRef.child(name.toString()).child("bloodgroup").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val bloodGroup = snapshot.value.toString()
+                binding.tvBloodGrp.text = bloodGroup
+            } else {
+                binding.tvBloodGrp.text = "N/A" // Or some placeholder text
+            }
+        }.addOnFailureListener {
+            binding.tvBloodGrp.text = "Error" // In case of any errors
+        }
+
+
+
         val toggleAvailability: MaterialSwitch = view.findViewById(R.id.toggle_availability)
-        val accountInfo: ImageView = view.findViewById(R.id.accInfo)
+        val accountInfo:LinearLayout=view.findViewById(R.id.accInfo)
         val donorHistory: ImageView = view.findViewById(R.id.donationHistory)
         val manageAddress: ImageView = view.findViewById(R.id.manageAddress)
         val settings: ImageView = view.findViewById(R.id.settings)
@@ -73,7 +93,6 @@ class ProfileFragment : Fragment() {
 
         accountInfo.setOnClickListener {
             val accInfoFrag  = account_InfoFragment()
-
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.profileFragment,accInfoFrag).addToBackStack(null).commit()
 
         }
