@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.adas.redconnect.databinding.ActivityHospitalMainBinding
 import com.adas.redconnect.fragments.AppointmentFragment
 import com.adas.redconnect.fragments.HospitalHomeFragment
-import com.adas.redconnect.fragments.RequestFragment
+import com.adas.redconnect.fragments.RequestBloodFragment
 
 class HospitalMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHospitalMainBinding
