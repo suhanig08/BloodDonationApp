@@ -46,6 +46,14 @@
             android:layout_width="75dp"
             android:layout_height="8dp"
             android:background="@drawable/progress_indicator_active" />
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="75dp"
+            android:layout_height="8dp"
+            android:background="@drawable/progress_indicator" />
     </LinearLayout>
 
     <!-- Title -->
