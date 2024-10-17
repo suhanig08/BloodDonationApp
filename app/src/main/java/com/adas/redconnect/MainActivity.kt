@@ -1,5 +1,6 @@
 package com.adas.redconnect
 
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
@@ -13,10 +14,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
+    private lateinit var dbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +36,8 @@ class MainActivity : AppCompatActivity() {
         }
         
         auth=FirebaseAuth.getInstance()
+        dbRef= FirebaseDatabase.getInstance().getReference("donor")
+
 
         replaceFragment(HomeFragment())
 
@@ -74,6 +81,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment){
+
+
+
+        val sharedPreferences=getSharedPreferences("DonorDet", MODE_PRIVATE)
+        val name=sharedPreferences?.getString("name","")
+
+        if(fragment==DonateFragment())
+        {
+            var age:String=""
+            dbRef.child(name.toString()).child("age").get().addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    age = snapshot.value.toString()
+                    Log.e("ageerror",age)
+                }
+            }.addOnFailureListener {
+            }
+//            dbRef.child(name.toString()).child("age").get().addOnSuccessListener { snapshot ->
+//                if (snapshot.exists()) {
+//                    val age = snapshot.value.toString()
+//                }
+//            }.addOnFailureListener {
+//            }
+
+            if(age.toInt()>=18)
+            {
+                val fragmentManager=supportFragmentManager
+                val fragmentTransaction=fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.frameLayout,fragment)
+                fragmentTransaction.commit()
+            }
+            else{
+                val i= Intent(this,NotEligibleActivity::class.java)
+                startActivity(i)
+                finish()
+            }
+        }
         val fragmentManager=supportFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)

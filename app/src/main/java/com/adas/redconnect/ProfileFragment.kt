@@ -42,11 +42,15 @@ class ProfileFragment : Fragment() {
 
         dbRef = FirebaseDatabase.getInstance().getReference("donor")
 
+        binding.logoutBtn.setOnClickListener {
+            signOut()
+        }
 
-        val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-        val name=sharedPreferences?.getString("name","")
 
-        binding.profileName.text=name
+        val sharedPreferences = activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+        val name = sharedPreferences?.getString("name", "")
+
+        binding.profileName.text = name
 
         dbRef.child(name.toString()).child("bloodgroup").get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
@@ -60,9 +64,8 @@ class ProfileFragment : Fragment() {
         }
 
 
-
         val toggleAvailability: MaterialSwitch = view.findViewById(R.id.toggle_availability)
-        val accountInfo:LinearLayout=view.findViewById(R.id.accInfo)
+        val accountInfo: LinearLayout = view.findViewById(R.id.accInfo)
         val donorHistory: ImageView = view.findViewById(R.id.donationHistory)
         val manageAddress: ImageView = view.findViewById(R.id.manageAddress)
         val settings: ImageView = view.findViewById(R.id.settings)
@@ -73,17 +76,17 @@ class ProfileFragment : Fragment() {
             // Logic for availability toggle
             if (isChecked) {
 
-                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-                val name=sharedPreferences?.getString("name","")
-                if(name!!.isNotEmpty()) {
+                val sharedPreferences = activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+                val name = sharedPreferences?.getString("name", "")
+                if (name!!.isNotEmpty()) {
                     dbRef.child(name).child("availability")
                         .setValue(true)
                 }
                 // User is available for donation
             } else {
-                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-                val name=sharedPreferences?.getString("name","")
-                if(name!!.isNotEmpty()) {
+                val sharedPreferences = activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
+                val name = sharedPreferences?.getString("name", "")
+                if (name!!.isNotEmpty()) {
                     dbRef.child(name).child("availability")
                         .setValue(false)
                 }
@@ -92,11 +95,37 @@ class ProfileFragment : Fragment() {
         }
 
         accountInfo.setOnClickListener {
-            val accInfoFrag  = account_InfoFragment()
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.profileFragment,accInfoFrag).addToBackStack(null).commit()
+            val accInfoFrag = account_InfoFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.profileFragment, accInfoFrag).addToBackStack(null).commit()
 
         }
+    }
+        
+//        val hospitalId = "test"
+//        val appointmentId = "test"
+//
+//        settings.setOnClickListener {
+//            // Assuming you have the hospitalId and appointmentId
+//            val chatFragment = ChatFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString("hospitalId", hospitalId)
+//                    putString("appointmentId", appointmentId)
+//                }
+//            }
+//
+//            // Replace the current fragment with ChatFragment
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.profileFragment, chatFragment)
+//                .addToBackStack(null)
+//                .commit()
+//        }
 
+    private fun signOut() {
+        val sharedPreferences = activity?.getSharedPreferences("ChoicePref", MODE_PRIVATE)
+        val editor = sharedPreferences?.edit()
+        editor?.putBoolean("isLoggedIn",false)
+            ?.apply()
     }
 
 }

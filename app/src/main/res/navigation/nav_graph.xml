@@ -41,7 +41,18 @@
         android:name="com.adas.redconnect.WeightFragment"
         android:label="WeightFragment" >
         <action
+            android:id="@+id/action_weightFragment_to_previousDonationFragment"
+            app:destination="@id/previousDonationFragment" />
+        <action
             android:id="@+id/action_weightFragment_to_heightFragment"
             app:destination="@id/heightFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previousDonationFragment"
+        android:name="com.adas.redconnect.Details_Fragment.PreviousDonationFragment"
+        android:label="PreviousDonationFragment" >
+        <action
+            android:id="@+id/action_previousDonationFragment_to_weightFragment"
+            app:destination="@id/weightFragment" />
     </fragment>
 </navigation>
