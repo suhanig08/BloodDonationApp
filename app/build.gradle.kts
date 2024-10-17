@@ -18,6 +18,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -38,11 +42,7 @@ android {
         viewBinding = true
     }
 
-    packagingOptions {
-        exclude("META-INF/DEPENDENCIES")
-    }
-
-    }
+}
 
 dependencies {
 
@@ -54,6 +54,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.auth)
+    implementation(libs.play.services.cast.framework)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,11 +83,15 @@ dependencies {
     implementation (libs.firebase.firestore.v2470)
     implementation (libs.firebase.messaging)
     implementation (libs.android.volley)
-    implementation (libs.google.google.auth.library.oauth2.http)
     implementation (libs.kotlinx.coroutines.core)
     implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.dexter)
+    implementation(libs.google.auth.library.oauth2.http.v1190)
 
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.firebase:firebase-database:20.3.0")
+
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

@@ -1,7 +1,10 @@
 package com.adas.redconnect
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
 import android.provider.ContactsContract
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -16,6 +19,12 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,32 +62,64 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("FCM", "Fetching FCM token failed", task.exception)
-                return@addOnCompleteListener
+        val policy= StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        FirebaseMessaging.getInstance().subscribeToTopic("all_users")
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("FCM", "Subscription to topic failed", task.exception)
+                } else {
+                    Log.d("FCM", "Subscribed to 'all_users' topic successfully")
+                }
             }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Dexter.withContext(applicationContext)
+                .withPermission(Manifest.permission.POST_NOTIFICATIONS).withListener(object :
+                    PermissionListener {
+                    override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
 
-            // Get new FCM registration token
-            val token = task.result
-            Log.d("FCM Token", token)
+                    }
 
-//             Store the token in Firestore
-            storeTokenInFirestore(token)
+                    override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        p0: PermissionRequest?,
+                        p1: PermissionToken?
+                    ) {
+                        p1?.continuePermissionRequest()
+                    }
+
+                }).check()
+
         }
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.w("FCM", "Fetching FCM token failed", task.exception)
+//                return@addOnCompleteListener
+//            }
+//
+//            // Get new FCM registration token
+//            val token = task.result
+//            Log.d("FCM Token", token)
+//
+////             Store the token in Firestore
+////            storeTokenInFirestore(token)
+//        }
     }
-    private fun storeTokenInFirestore(token: String) {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId!!)
-
-        userRef.set(mapOf("fcm_token" to token), SetOptions.merge())
-            .addOnSuccessListener {
-                Log.d("Firestore", "FCM token saved successfully")
-            }
-            .addOnFailureListener { e ->
-                Log.w("Firestore", "Error saving FCM token", e)
-            }
-    }
+//    private fun storeTokenInFirestore(token: String) {
+//        val userId = FirebaseAuth.getInstance().currentUser?.uid
+//        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId!!)
+//
+//        userRef.set(mapOf("fcm_token" to token), SetOptions.merge())
+//            .addOnSuccessListener {
+//                Log.d("Firestore", "FCM token saved successfully")
+//            }
+//            .addOnFailureListener { e ->
+//                Log.w("Firestore", "Error saving FCM token", e)
+//            }
+//    }
 
     private fun replaceFragment(fragment: Fragment){
 
