@@ -64,22 +64,22 @@ class MainActivity : AppCompatActivity() {
             Log.d("FCM Token", token)
 
 //             Store the token in Firestore
-            storeTokenInFirestore(token)
+//            storeTokenInFirestore(token)
         }
     }
-    private fun storeTokenInFirestore(token: String) {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId!!)
-
-        userRef.set(mapOf("fcm_token" to token), SetOptions.merge())
-            .addOnSuccessListener {
-                Log.d("Firestore", "FCM token saved successfully")
-            }
-            .addOnFailureListener { e ->
-                Log.w("Firestore", "Error saving FCM token", e)
-            }
-    }
-
+//    private fun storeTokenInFirestore(token: String) {
+//        val userId = FirebaseAuth.getInstance().currentUser?.uid
+//        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId!!)
+//
+//        userRef.set(mapOf("fcm_token" to token), SetOptions.merge())
+//            .addOnSuccessListener {
+//                Log.d("Firestore", "FCM token saved successfully")
+//            }
+//            .addOnFailureListener { e ->
+//                Log.w("Firestore", "Error saving FCM token", e)
+//            }
+//    }
+//
     private fun replaceFragment(fragment: Fragment){
 
 
