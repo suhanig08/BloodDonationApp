@@ -116,13 +116,9 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun nextBtnEnabled() {
-        val sharedPreferences=getSharedPreferences("DonorDet", MODE_PRIVATE)
-        val name=sharedPreferences.getString("name","")
-        Log.e("UserDetailss",name.toString())
-        if(name!!.isNotEmpty()) {
-            dbRef.child(name).child("address")
+            dbRef.child(auth.currentUser!!.uid).child("address")
                 .setValue(binding.locationTv.text.toString())
-        }
+
         Log.i("locationTv", binding.locationTv.text.toString())
         binding.nxtBtn.alpha = 1.0F
         binding.nxtBtn.isClickable = true

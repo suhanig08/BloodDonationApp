@@ -14,11 +14,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.adas.redconnect.MainActivity
 import com.adas.redconnect.R
 import com.adas.redconnect.databinding.FragmentPreviousDonationBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
 
 class PreviousDonationFragment : Fragment() {
+
+    private lateinit var auth: FirebaseAuth
+
     private var previousDonationBinding: FragmentPreviousDonationBinding? = null
     private val binding get() = previousDonationBinding!!
     private var dateString = ""
@@ -38,6 +42,7 @@ class PreviousDonationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dbRef = FirebaseDatabase.getInstance().getReference("donor")
+        auth = FirebaseAuth.getInstance()
 
         binding.calendarView.visibility = View.GONE
         binding.dateChoiceTv.visibility = View.GONE
@@ -79,23 +84,13 @@ class PreviousDonationFragment : Fragment() {
         binding.doneBtn.setOnClickListener {
             if(dateString.isNotEmpty()){
 
-                val sharedPreferences=activity?.getSharedPreferences("DonorDet",
-                    AppCompatActivity.MODE_PRIVATE
-                )
-                val name=sharedPreferences?.getString("name","")
-                if(name!!.isNotEmpty()) {
-                    dbRef.child(name).child("dateDonated")
+                    dbRef.child(auth.currentUser!!.uid).child("dateDonated")
                         .setValue(dateString)
-                }
+
             } else{
-                val sharedPreferences=activity?.getSharedPreferences("DonorDet",
-                    AppCompatActivity.MODE_PRIVATE
-                )
-                val name=sharedPreferences?.getString("name","")
-                if(name!!.isNotEmpty()) {
-                    dbRef.child(name).child("dateDonated")
-                        .setValue("")
-                }
+                dbRef.child(auth.currentUser!!.uid).child("dateDonated")
+                        .setValue("N/A")
+
             }
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)

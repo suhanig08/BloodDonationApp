@@ -26,15 +26,16 @@ class DonorAuth : AppCompatActivity() {
         countrycodePicker = binding.ccp
         auth = FirebaseAuth.getInstance()
 
-        val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
+        val sharedPreferences=getSharedPreferences("DonorDet", MODE_PRIVATE)
+        val editor=sharedPreferences.edit()
+
 
         binding.NextBtn.setOnClickListener {
             // Save donor details
-            editor.putString("name", binding.nameEt.text.toString())
-            dbRef.child(binding.nameEt.text.toString()).child("uid").setValue(auth.currentUser?.uid)
-            dbRef.child(binding.nameEt.text.toString()).child("phone").setValue(binding.phoneEt.text.toString())
-            dbRef.child(binding.nameEt.text.toString()).child("age").setValue(binding.ageEt.text.toString())
+            editor.putString("name",binding.nameEt.text.toString())
+            editor.putString("age",binding.ageEt.text.toString())
+            editor.putString("phone",binding.phoneEt.text.toString())
+                .apply()
 
             val name = binding.nameEt.text
             phNum = binding.phoneEt.text.toString()

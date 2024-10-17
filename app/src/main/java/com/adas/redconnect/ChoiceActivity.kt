@@ -23,7 +23,6 @@ class ChoiceActivity : AppCompatActivity() {
             // If the user is already logged in, navigate to MainActivity
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-            return
         }
 
         // If not logged in, proceed with the usual setup
