@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.adas.redconnect.databinding.FragmentWeightBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -58,9 +59,11 @@ private lateinit var auth: FirebaseAuth
                 Toast.makeText(requireContext(), "Weight: $enteredWeight kg", Toast.LENGTH_SHORT).show()
 
                 // Navigate to the MainActivity
-                val intent = Intent(activity, MainActivity::class.java)
-                startActivity(intent)
-                activity?.finish()  // Optional: Close the fragment's parent activity if necessary
+//                val intent = Intent(activity, MainActivity::class.java)
+//                startActivity(intent)
+//                activity?.finish()  // Optional: Close the fragment's parent activity if necessary
+
+                findNavController().navigate(R.id.action_weightFragment_to_previousDonationFragment)
             } else {
                 // No weight entered, show a message
                 Toast.makeText(requireContext(), "Please enter your weight", Toast.LENGTH_SHORT).show()
