@@ -65,7 +65,7 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/tv_bloodGrp"
+                android:id="@+id/tv_BloodGrp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="B+"
@@ -171,27 +171,27 @@
         </LinearLayout>
 
         <!-- Email Field -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="5dp"
-            android:background="@color/white">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="E-mail"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@color/white">-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="E-mail"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textColor="@color/black" />-->
 
-            <TextView
-                android:id="@+id/tv_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="fghjk"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_email"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="fghjk"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black" />-->
+<!--        </LinearLayout>-->
 
     </LinearLayout>
 

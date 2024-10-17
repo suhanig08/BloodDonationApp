@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/questionFlipper"
+    android:background="@color/darkGrey"
+    android:layout_width="match_parent"
+    android:paddingTop="10dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_height="match_parent">
+
+        <!-- Chronic Diseases Question -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/backBtn"
+                android:paddingStart="9dp"
+                android:layout_width="40dp"
+                android:layout_height="34dp"
+                android:src="@drawable/back_icon"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="26dp">
+
+                <View
+                    android:layout_width="75dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/progress_indicator_active" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp" />
+
+                <View
+                    android:layout_width="75dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/progress_indicator" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp" />
+
+                <View
+                    android:layout_width="75dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/progress_indicator" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp" />
+
+                <View
+                    android:layout_width="75dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/progress_indicator" />
+            </LinearLayout>
+
+            <TextView
+                android:paddingStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood Donation Questionnaire"
+                android:textColor="#E62D49"
+                android:textSize="24sp"
+                android:fontFamily="@font/inter_sb"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Do you have any chronic diseases?"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="16dp" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="60dp">
+
+                <RadioButton
+                    android:text="true"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginEnd="45dp"
+                    android:gravity="center"
+                    android:button="@null"
+                    android:padding="20dp"
+                    android:background="@drawable/button_background"
+                    android:drawableTop="@drawable/correct_icon" />
+
+                <RadioButton
+                    android:text="false"
+                    android:layout_width="120dp"
+                    android:padding="25dp"
+                    android:layout_height="120dp"
+                    android:gravity="center"
+                    android:button="@null"
+                    android:drawableTop="@drawable/wrong_icon"
+                    android:background="@drawable/button_background" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/button_next1"
+                android:layout_width="70dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="95dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/red"
+                android:drawableTop="@drawable/baseline_navigate_next_24" />
+
+        </LinearLayout>
+
+        <!-- Surgery Question -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="26dp">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator" />
+        </LinearLayout>
+
+        <TextView
+            android:paddingStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blood Donation Questionnaire"
+            android:textColor="#E62D49"
+            android:textSize="24sp"
+            android:fontFamily="@font/inter_sb"
+            android:paddingBottom="16dp" />
+
+        <TextView
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Have you had any recent surgeries in the last 6 months?"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="60dp">
+
+            <RadioButton
+                android:text="true"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="45dp"
+                android:gravity="center"
+                android:button="@null"
+                android:padding="20dp"
+                android:background="@drawable/button_background"
+                android:drawableTop="@drawable/correct_icon" />
+
+            <RadioButton
+                android:text="false"
+                android:layout_width="120dp"
+                android:padding="25dp"
+                android:layout_height="120dp"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/wrong_icon"
+                android:background="@drawable/button_background" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/button_next2"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="95dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/red"
+            android:drawableTop="@drawable/baseline_navigate_next_24" />
+
+    </LinearLayout>
+
+        <!-- illness question -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="26dp">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator" />
+        </LinearLayout>
+
+        <TextView
+            android:paddingStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blood Donation Questionnaire"
+            android:textColor="#E62D49"
+            android:textSize="24sp"
+            android:fontFamily="@font/inter_sb"
+            android:paddingBottom="16dp" />
+
+        <TextView
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Any symptoms of illness in last two weeks?"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="60dp">
+
+            <RadioButton
+                android:text="true"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="45dp"
+                android:gravity="center"
+                android:button="@null"
+                android:padding="20dp"
+                android:background="@drawable/button_background"
+                android:drawableTop="@drawable/correct_icon" />
+
+            <RadioButton
+                android:text="false"
+                android:layout_width="120dp"
+                android:padding="25dp"
+                android:layout_height="120dp"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/wrong_icon"
+                android:background="@drawable/button_background" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/button_next3"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="95dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/red"
+            android:drawableTop="@drawable/baseline_navigate_next_24" />
+
+    </LinearLayout>
+
+<!--    alcohol question-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="26dp">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="8dp"
+                android:background="@drawable/progress_indicator_active" />
+        </LinearLayout>
+
+        <TextView
+            android:paddingStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blood Donation Questionnaire"
+            android:textColor="#E62D49"
+            android:textSize="24sp"
+            android:fontFamily="@font/inter_sb"
+            android:paddingBottom="16dp" />
+
+        <TextView
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Have you consumed alcohol in last 24 hours?"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="60dp">
+
+            <RadioButton
+                android:text="true"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="45dp"
+                android:gravity="center"
+                android:button="@null"
+                android:padding="20dp"
+                android:background="@drawable/button_background"
+                android:drawableTop="@drawable/correct_icon" />
+
+            <RadioButton
+                android:text="false"
+                android:layout_width="120dp"
+                android:padding="25dp"
+                android:layout_height="120dp"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/wrong_icon"
+                android:background="@drawable/button_background" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/button_next4"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="95dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/red"
+            android:drawableTop="@drawable/baseline_navigate_next_24" />
+
+    </LinearLayout>
+
+
+    </ViewFlipper>
+
+
+
