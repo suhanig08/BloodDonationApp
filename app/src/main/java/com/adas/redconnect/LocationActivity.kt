@@ -51,7 +51,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private var currLong by Delegates.notNull<Double>()
     private lateinit var searchLatlng : LatLng
     private var mm : Marker? = null
-    private var hospName=""
+    private var hospName: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
