@@ -100,7 +100,7 @@ class RequestBloodFragment : Fragment() {
 
 
 
-    private suspend fun sendNotificationToAllDonors() {
+    private fun sendNotificationToAllDonors() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val querySnapshot = db.collection("users").get().await()
@@ -121,7 +121,7 @@ class RequestBloodFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Error fetching tokens: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Error fetching tokens: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }
