@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
@@ -19,26 +19,26 @@
         android:theme="@style/Theme.RedConnect"
         tools:targetApi="31">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".NotEligibleActivity"
             android:exported="false" />
         <activity
             android:name=".QuestionnaireActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".UserDetails"
             android:exported="false" />
         <activity
             android:name=".LocationActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".OtpActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".HospitalMainActivity"
-            android:exported="true"/>
-            
+            android:exported="true" />
         <activity
             android:name=".DonorAuth"
             android:exported="true">
@@ -55,14 +55,12 @@
             android:exported="false" />
         <activity
             android:name=".ChoiceActivity"
-            android:exported="true" >
-
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".MainActivity"

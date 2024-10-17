@@ -19,8 +19,7 @@ android {
     }
 
     packagingOptions {
-        // Exclude duplicate files
-        exclude ("META-INF/DEPENDENCIES")
+        exclude("META-INF/DEPENDENCIES")
     }
 
     buildTypes {
@@ -42,6 +41,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -54,6 +54,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.auth)
+    implementation(libs.play.services.cast.framework)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

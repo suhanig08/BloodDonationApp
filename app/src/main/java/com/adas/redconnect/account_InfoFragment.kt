@@ -1,5 +1,6 @@
 package com.adas.redconnect
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,6 +43,11 @@ class account_InfoFragment : Fragment() {
             }
         }.addOnFailureListener {
             binding.tvName.text = "Error" // In case of any errors
+        }
+
+        binding.editBtn.setOnClickListener {
+            val i= Intent(context,EditProfileActivity::class.java)
+            startActivity(i)
         }
 
         dbRef.child(auth.currentUser!!.uid).child("bloodgroup").get().addOnSuccessListener { snapshot ->
