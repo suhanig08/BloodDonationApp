@@ -67,13 +67,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dbRef=FirebaseDatabase.getInstance().getReference("donor")
+        auth = FirebaseAuth.getInstance()
 
-        val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-        val name=sharedPreferences?.getString("name","")
 
-        binding.userName.setText("Hi, ${name}")
-
-        dbRef.child(name.toString()).child("bloodgroup").get().addOnSuccessListener { snapshot ->
+        dbRef.child(auth.currentUser!!.uid).child("bloodgroup").get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
                 val bloodGroup = snapshot.value.toString()
                 binding.userBloodGrp.text = bloodGroup
@@ -82,6 +79,16 @@ class HomeFragment : Fragment() {
               }
         }.addOnFailureListener {
             binding.userBloodGrp.text = "Error" // In case of any errors
+        }
+        dbRef.child(auth.currentUser!!.uid).child("name").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val name= snapshot.value.toString()
+                binding.userName.text = "Hi, $name!"
+            } else {
+                binding.userName.text = "N/A" // Or some placeholder text
+            }
+        }.addOnFailureListener {
+            binding.userName.text = "Error" // In case of any errors
         }
 
     }

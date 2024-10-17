@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import com.adas.redconnect.databinding.FragmentAccountInfoBinding
 import com.adas.redconnect.databinding.FragmentProfileBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class account_InfoFragment : Fragment() {
     private lateinit var binding: FragmentAccountInfoBinding
     private lateinit var dbRef: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreateView(
@@ -29,13 +31,20 @@ class account_InfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dbRef = FirebaseDatabase.getInstance().getReference("donor")
+        auth = FirebaseAuth.getInstance()
 
-        val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-        val name=sharedPreferences?.getString("name","")
+        dbRef.child(auth.currentUser!!.uid).child("name").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val bloodGroup = snapshot.value.toString()
+                binding.tvName.text = bloodGroup
+            } else {
+                binding.tvName.text = "N/A" // Or some placeholder text
+            }
+        }.addOnFailureListener {
+            binding.tvName.text = "Error" // In case of any errors
+        }
 
-        binding.tvName.text=name
-
-        dbRef.child(name.toString()).child("bloodgroup").get().addOnSuccessListener { snapshot ->
+        dbRef.child(auth.currentUser!!.uid).child("bloodgroup").get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
                 val bloodGroup = snapshot.value.toString()
                 binding.tvBloodGrp.text = bloodGroup
@@ -46,7 +55,7 @@ class account_InfoFragment : Fragment() {
             binding.tvBloodGrp.text = "Error" // In case of any errors
         }
 
-        dbRef.child(name.toString()).child("gender").get().addOnSuccessListener { snapshot ->
+        dbRef.child(auth.currentUser!!.uid).child("gender").get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
                 val gender = snapshot.value.toString()
                 binding.tvGender.text = gender
@@ -57,7 +66,7 @@ class account_InfoFragment : Fragment() {
             binding.tvGender.text = "Error" // In case of any errors
         }
 
-        dbRef.child(name.toString()).child("age").get().addOnSuccessListener { snapshot ->
+        dbRef.child(auth.currentUser!!.uid).child("age").get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
                 val age = snapshot.value.toString()
                 binding.tvAge.text = age
@@ -68,7 +77,7 @@ class account_InfoFragment : Fragment() {
             binding.tvAge.text = "Error" // In case of any errors
         }
 
-        dbRef.child(name.toString()).child("phone").get().addOnSuccessListener { snapshot ->
+        dbRef.child(auth.currentUser!!.uid).child("phone").get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
                 val num = snapshot.value.toString()
                 binding.tvPhn.text = num
@@ -79,7 +88,7 @@ class account_InfoFragment : Fragment() {
             binding.tvPhn.text = "Error" // In case of any errors
         }
 
-        dbRef.child(name.toString()).child("address").get().addOnSuccessListener { snapshot ->
+        dbRef.child(auth.currentUser!!.uid).child("address").get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
                 val location = snapshot.value.toString()
                 binding.tvLocation.text = location
