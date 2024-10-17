@@ -23,7 +23,6 @@ class HomeFragment : Fragment() {
     private lateinit var dbRef: DatabaseReference
     private lateinit var auth: FirebaseAuth
     //private lateinit var recyclerView: RecyclerView
-    private lateinit var addAppt : EditText
     private lateinit var appointmentsAdapter: AppointmentsAdapter
     private lateinit var appointmentsList: MutableList<Appointment>
     private var homeBinding : FragmentHomeBinding? = null
@@ -46,19 +45,19 @@ class HomeFragment : Fragment() {
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
-
-        appointmentsList = mutableListOf()
-        appointmentsAdapter = AppointmentsAdapter(appointmentsList)
-        binding.appointmentsRv.adapter = appointmentsAdapter
-
-        //addAppt = view.findViewById(R.id.addAppointment)
-
-        loadMessages()
-
-//        addAppt.setOnClickListener {
-//            sendMessage("Hello")
-//        }
+//        binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
+//
+//        appointmentsList = mutableListOf()
+//        appointmentsAdapter = AppointmentsAdapter(appointmentsList)
+//        binding.appointmentsRv.adapter = appointmentsAdapter
+//
+//        //addAppt = view.findViewById(R.id.addAppointment)
+//
+//        loadMessages()
+//
+////        addAppt.setOnClickListener {
+////            sendMessage("Hello")
+////        }
 
         return binding.root
     }
@@ -120,6 +119,7 @@ class HomeFragment : Fragment() {
         val appointmentsRef = database.getReference("appointments")
         val appointmentId = appointmentsRef.push().key ?: return
         val appointment = Appointment(
+            id = appointmentId,
             hospitalId = "",
             donorId = auth.currentUser?.uid ?: "x",
             hospitalName = "",

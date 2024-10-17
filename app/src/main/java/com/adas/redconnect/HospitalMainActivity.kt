@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.adas.redconnect.databinding.ActivityHospitalMainBinding
 import com.adas.redconnect.fragments.AppointmentFragment
+import com.adas.redconnect.fragments.HospitalChatFragment
 import com.adas.redconnect.fragments.HospitalHomeFragment
 import com.adas.redconnect.fragments.RequestFragment
 
@@ -30,8 +31,8 @@ class HospitalMainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.home ->replaceFragment(HospitalHomeFragment())
-                R.id.request ->replaceFragment(RequestFragment())
-                R.id.appointments ->replaceFragment(AppointmentFragment())
+                R.id.request ->replaceFragment(RequestBloodFragment())
+                R.id.appointments ->replaceFragment(HospitalChatFragment())
 
                 else->{
 

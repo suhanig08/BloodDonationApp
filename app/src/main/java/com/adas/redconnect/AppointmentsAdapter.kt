@@ -1,16 +1,26 @@
 package com.adas.redconnect
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 
-class AppointmentsAdapter(private val appointmentsList: List<Appointment>):
+class AppointmentsAdapter(private val appointmentsList: List<Appointment>,
+                          private val fragmentManager: FragmentManager):
     RecyclerView.Adapter<AppointmentsAdapter.AppointmentsViewHolder>() {
 
     inner class AppointmentsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val hospitalName: TextView = itemView.findViewById(R.id.hospitalName)
+        val apptDate: TextView = itemView.findViewById(R.id.apptDate)
+        val apptTime: TextView = itemView.findViewById(R.id.apptTime)
+        val chatButton : ImageButton = itemView.findViewById(R.id.chatButton)
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppointmentsViewHolder {
@@ -25,6 +35,20 @@ class AppointmentsAdapter(private val appointmentsList: List<Appointment>):
 
     override fun onBindViewHolder(holder: AppointmentsViewHolder, position: Int) {
         val appointment = appointmentsList[position]
-        holder.hospitalName.text = appointment.msg
+        holder.hospitalName.text = appointment.hospitalName
+        holder.apptDate.text = appointment.date
+        holder.apptTime.text = appointment.time
+
+        holder.chatButton.setOnClickListener {
+
+            val chatFragment = ChatFragment.newInstance(appointment.id)
+
+            // Replace the current fragment with the ChatFragment
+            fragmentManager.beginTransaction()
+                .replace(R.id.hospitalChatFragment, chatFragment)
+                .addToBackStack(null) // Optional: add to back stack to enable back navigation
+                .commit()
+
+        }
     }
 }

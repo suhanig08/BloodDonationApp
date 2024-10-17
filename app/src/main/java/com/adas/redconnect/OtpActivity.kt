@@ -29,7 +29,7 @@ class OtpActivity : AppCompatActivity() {
     private lateinit var dbRef:DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var timeOutSeconds = 60L
-    private lateinit var verificationCode: String
+    private var verificationCode: String="0"
     private lateinit var phNum:String
     private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
 
@@ -161,9 +161,11 @@ class OtpActivity : AppCompatActivity() {
         val age = sharedPreferences.getString("age", "N/A")
         val phone= sharedPreferences.getString("phone", "N/A")
 
-        dbRef.child(auth.currentUser!!.uid).child("name").setValue(name)
-        dbRef.child(auth.currentUser!!.uid).child("phone").setValue(phone)
-        dbRef.child(auth.currentUser!!.uid).child("age").setValue(age)
+
+
+        dbRef.child(auth.currentUser?.uid ?: "").child("name").setValue(name)
+        dbRef.child(auth.currentUser?.uid?:"").child("phone").setValue(phone)
+        dbRef.child(auth.currentUser?.uid?:"").child("age").setValue(age)
 
         setInProgress(true)
         auth.signInWithCredential(credential)
