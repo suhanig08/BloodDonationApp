@@ -11,8 +11,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.adas.redconnect.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -49,6 +53,31 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Log.d("FCM Token", token)
+
+//             Store the token in Firestore
+            storeTokenInFirestore(token)
+        }
+    }
+    private fun storeTokenInFirestore(token: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId!!)
+
+        userRef.set(mapOf("fcm_token" to token), SetOptions.merge())
+            .addOnSuccessListener {
+                Log.d("Firestore", "FCM token saved successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firestore", "Error saving FCM token", e)
+            }
     }
 
     private fun replaceFragment(fragment: Fragment){

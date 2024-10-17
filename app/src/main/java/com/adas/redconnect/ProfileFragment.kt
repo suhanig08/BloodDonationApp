@@ -51,7 +51,7 @@ class ProfileFragment : Fragment() {
         }
 
         dbRef.child(auth.currentUser!!.uid).child("name").get().addOnSuccessListener { snapshot ->
-            if (snapshot.exists()) {
+              if (snapshot.exists()) {
                 val bloodGroup = snapshot.value.toString()
                 binding.profileName.text = bloodGroup
             } else {
@@ -85,7 +85,6 @@ class ProfileFragment : Fragment() {
             binding.lastDonation.text = "Error" // In case of any errors
         }
 
-
         val toggleAvailability: MaterialSwitch = view.findViewById(R.id.toggle_availability)
         val accountInfo: LinearLayout = view.findViewById(R.id.accInfo)
         val donorHistory: ImageView = view.findViewById(R.id.donationHistory)
@@ -98,6 +97,7 @@ class ProfileFragment : Fragment() {
             // Logic for availability toggle
             if (isChecked) {
 
+
                 dbRef.child(auth.currentUser!!.uid).child("availability")
                     .setValue(true)
                 // User is available for donation
@@ -107,6 +107,7 @@ class ProfileFragment : Fragment() {
             }
             // User is unavailable for donation
 
+
             accountInfo.setOnClickListener {
                 val accInfoFrag = account_InfoFragment()
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -114,8 +115,28 @@ class ProfileFragment : Fragment() {
 
             }
 
+
         }
     }
+        
+//        val hospitalId = "test"
+//        val appointmentId = "test"
+//
+//        settings.setOnClickListener {
+//            // Assuming you have the hospitalId and appointmentId
+//            val chatFragment = ChatFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString("hospitalId", hospitalId)
+//                    putString("appointmentId", appointmentId)
+//                }
+//            }
+//
+//            // Replace the current fragment with ChatFragment
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.profileFragment, chatFragment)
+//                .addToBackStack(null)
+//                .commit()
+//        }
 
     private fun signOut() {
         val sharedPreferences = activity?.getSharedPreferences("ChoicePref", MODE_PRIVATE)

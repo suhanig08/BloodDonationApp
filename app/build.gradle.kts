@@ -70,8 +70,16 @@ dependencies {
     
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.firebase:firebase-database-ktx")
 
     implementation ("com.hbb20:ccp:2.5.0")
+    implementation (libs.firebase.firestore.v2470)
+    implementation (libs.firebase.messaging)
+    implementation (libs.android.volley)
+    implementation (libs.google.google.auth.library.oauth2.http)
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
+
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.firebase:firebase-database:20.3.0")
