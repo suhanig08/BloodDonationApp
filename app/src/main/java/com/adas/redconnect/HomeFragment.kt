@@ -15,7 +15,7 @@ import com.google.firebase.database.values
 
 class HomeFragment : Fragment() {
 
-    private lateinit var dbRef:DatabaseReference
+    private lateinit var dbRef: DatabaseReference
 
     private lateinit var binding: FragmentHomeBinding
 

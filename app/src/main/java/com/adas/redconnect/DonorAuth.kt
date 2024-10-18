@@ -32,6 +32,7 @@ class DonorAuth : AppCompatActivity() {
         binding.NextBtn.setOnClickListener {
             // Save donor details
             editor.putString("name", binding.nameEt.text.toString())
+                .apply()
             dbRef.child(binding.nameEt.text.toString()).child("uid").setValue(auth.currentUser?.uid)
             dbRef.child(binding.nameEt.text.toString()).child("phone").setValue(binding.phoneEt.text.toString())
             dbRef.child(binding.nameEt.text.toString()).child("age").setValue(binding.ageEt.text.toString())
