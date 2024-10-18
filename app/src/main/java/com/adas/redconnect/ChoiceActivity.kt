@@ -18,10 +18,16 @@ class ChoiceActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
 
         // Check if the user is already logged in
+        val choice=sharedPreferences.getString("choice","")
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
-        if (isLoggedIn) {
+        val hospLoggedIn=sharedPreferences.getBoolean("hospLoggedIn",false)
+        if (isLoggedIn&&choice=="donor") {
             // If the user is already logged in, navigate to MainActivity
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+        if(hospLoggedIn&&choice=="hospital"){
+            startActivity(Intent(this, HospitalMainActivity::class.java))
             finish()
         }
 

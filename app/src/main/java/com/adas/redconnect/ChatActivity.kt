@@ -1,21 +1,20 @@
 package com.adas.redconnect
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.EditText
+import android.widget.ImageButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class ChatFragment : Fragment() {
+class ChatActivity : AppCompatActivity() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -27,31 +26,28 @@ class ChatFragment : Fragment() {
     private lateinit var editTextMessage: EditText
     private lateinit var buttonSend: ImageButton
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_chat, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_chat)
 
         // Initialize Firebase
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        // Retrieve chatId from arguments
-        chatId = arguments?.getString(ARG_CHAT_ID) ?: throw IllegalArgumentException("Chat ID not provided")
+        // Retrieve chatId from intent
+        chatId = intent.getStringExtra("appointmentID") ?: throw IllegalArgumentException("Chat ID not provided")
 
         // Initialize RecyclerView
-        recyclerView = view.findViewById(R.id.recyclerViewMessages)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView = findViewById(R.id.recyclerViewMessages)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         messageList = mutableListOf()
         messageAdapter = MessageAdapter(messageList, auth.currentUser?.uid ?: "")
         recyclerView.adapter = messageAdapter
 
         // Initialize input field and send button
-        editTextMessage = view.findViewById(R.id.editTextMessage)
-        buttonSend = view.findViewById(R.id.buttonSend)
+        editTextMessage = findViewById(R.id.editTextMessage)
+        buttonSend = findViewById(R.id.buttonSend)
 
         // Load existing messages
         loadMessages()
@@ -64,8 +60,6 @@ class ChatFragment : Fragment() {
                 editTextMessage.text.clear()
             }
         }
-
-        return view
     }
 
     // Function to load messages from Firebase
@@ -106,17 +100,15 @@ class ChatFragment : Fragment() {
     }
 
     companion object {
-        private const val ARG_CHAT_ID = "chatId"
+        const val ARG_CHAT_ID = "chatId" // Make this public for accessibility
 
-        fun newInstance(chatId: String): ChatFragment {
-            val fragment = ChatFragment()
-            val args = Bundle().apply {
-                putString(ARG_CHAT_ID, chatId)
+        fun start(activity: AppCompatActivity, chatId: String) {
+            val intent = Intent(activity, ChatActivity::class.java).apply {
+                putExtra(ARG_CHAT_ID, chatId)
             }
-            fragment.arguments = args
-            return fragment
+            activity.startActivity(intent)
         }
     }
-}
 
+}
 
