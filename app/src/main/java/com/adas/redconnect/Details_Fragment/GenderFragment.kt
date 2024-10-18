@@ -53,12 +53,9 @@ class GenderFragment : Fragment() {
                 val selectedGender = view.findViewById<RadioButton>(selectedGenderId).text
                 Log.e("UserDetailss",selectedGender.toString())
 
-                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-                val name=sharedPreferences?.getString("name","")
-                if(name!!.isNotEmpty()) {
-                    dbRef.child(name).child("gender")
+                    dbRef.child(auth.currentUser!!.uid).child("gender")
                         .setValue(selectedGender.toString())
-                }
+
 
                 // Optional: Show a Toast with the selected gender
                 Toast.makeText(requireContext(), "Selected: $selectedGender", Toast.LENGTH_SHORT).show()

@@ -36,7 +36,7 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hi, Firdaus!"
+            android:text=""
             app:layout_constraintTop_toBottomOf="@id/welcome_text"
             app:layout_constraintStart_toStartOf="parent"
             android:textColor="@color/darkGrey"
@@ -171,7 +171,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Appointments"
+            android:text="Appointment"
             android:textColor="#E62D49"
             android:fontFamily="@font/inter_l"
             android:textSize="18sp"
@@ -179,50 +179,20 @@
             android:paddingTop="16dp"
             android:paddingBottom="8dp"/>
 
-        <!-- Sample Request Items -->
-        <LinearLayout
+        <!-- Appointments -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/appointmentsRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_card_background"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trinetra Multispecialty"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--            android:id="@+id/addAppointment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Add Appointment" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Blood Type Needed: O+, AB-, B+"
-                android:textSize="14sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_card_background"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Well Care Blood Bank"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Blood Type Needed: A-, B+"
-                android:textSize="14sp"/>
-        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

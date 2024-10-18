@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit
 
 class OtpActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOtpBinding
+    private lateinit var dbRef:DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var timeOutSeconds = 60L
     private lateinit var verificationCode: String
@@ -46,6 +47,8 @@ class OtpActivity : AppCompatActivity() {
         //val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
 
         auth = FirebaseAuth.getInstance()
+        dbRef=FirebaseDatabase.getInstance().getReference("donor")
+
         phNum = intent.getStringExtra("phoneNum").toString()
         Log.e("phoneNum", phNum.toString())
         sendOtp(phNum!!, false)
@@ -54,23 +57,24 @@ class OtpActivity : AppCompatActivity() {
         setupOtpInputs()
 
         binding.NextBtn.setOnClickListener {
-            if(binding.otpBox1.text.isEmpty()||binding.otpBox2.text.isEmpty()||binding.otpBox3.text.isEmpty()||
-                binding.otpBox4.text.isEmpty()||binding.otpBox5.text.isEmpty()||binding.otpBox6.text.isEmpty()){
-                Toast.makeText(this, "Please enter the otp", Toast.LENGTH_SHORT).show()
-            }
-            else {
+            if (binding.otpBox1.text.isEmpty() || binding.otpBox2.text.isEmpty() || binding.otpBox3.text.isEmpty() ||
+                binding.otpBox4.text.isEmpty() || binding.otpBox5.text.isEmpty() || binding.otpBox6.text.isEmpty()) {
+
+                Toast.makeText(this, "Please enter the OTP", Toast.LENGTH_SHORT).show()
+            } else if (!::verificationCode.isInitialized) {
+                // Display a message if verificationCode is not initialized
+                Toast.makeText(this, "Please wait, OTP is being sent", Toast.LENGTH_SHORT).show()
+            } else {
                 val enteredOtp = binding.otpBox1.text.toString() + binding.otpBox2.text.toString() +
-                        binding.otpBox3.text.toString() +
-                        binding.otpBox4.text.toString() + binding.otpBox5.text.toString() + binding.otpBox6.text.toString()
+                        binding.otpBox3.text.toString() + binding.otpBox4.text.toString() +
+                        binding.otpBox5.text.toString() + binding.otpBox6.text.toString()
+
                 val credential = PhoneAuthProvider.getCredential(verificationCode, enteredOtp)
-                val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                editor.putBoolean("isLoggedIn",true)
-                    .apply()
                 signInWithPhoneAuthCredential(credential)
                 setInProgress(true)
             }
         }
+
 
         binding.resendTv.setOnClickListener {
             sendOtp(phNum, true)
@@ -127,6 +131,7 @@ class OtpActivity : AppCompatActivity() {
         }
 
         override fun onVerificationFailed(p0: FirebaseException) {
+            Log.e("otpfailed",p0.toString())
             Toast.makeText(this@OtpActivity, "OTP Verification Failed", Toast.LENGTH_SHORT).show()
             setInProgress(false)
         }
@@ -154,11 +159,26 @@ class OtpActivity : AppCompatActivity() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+
+        val sharedPreferences=getSharedPreferences("DonorDet", MODE_PRIVATE)
+        val name = sharedPreferences.getString("name", "N/A")
+        val age = sharedPreferences.getString("age", "N/A")
+        val phone= sharedPreferences.getString("phone", "N/A")
+
         setInProgress(true)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 setInProgress(false)
                 if (task.isSuccessful) {
+
+                    dbRef.child(auth.currentUser?.uid ?: "").child("name").setValue(name)
+                    dbRef.child(auth.currentUser?.uid ?: "").child("phone").setValue(phone)
+                    dbRef.child(auth.currentUser?.uid ?: "").child("age").setValue(age)
+
+                    val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("isLoggedIn",true)
+                        .apply()
                     val i = Intent(this, LocationActivity::class.java)
                     startActivity(i)
                     finish()

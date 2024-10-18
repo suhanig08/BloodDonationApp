@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InputDataActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#1C1C1C">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donation Information"
+            android:textSize="24sp"
+            android:textColor="#E64E4C"
+            android:gravity="center"
+            android:fontFamily="@font/inter_sb"
+            android:padding="24dp"
+            android:textStyle="bold"/>
+
+        <!-- Months since last donation -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Months since last donation"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/inter"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/lastDonation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter months"
+            android:textColorHint="#B0BEC5"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/redPrimary"
+            android:fontFamily="@font/inter"
+            android:padding="12dp" />
+
+        <!-- Number of donations -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Number of donations"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/inter"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/numberDonations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter number of donations"
+            android:textColorHint="#B0BEC5"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/redPrimary"
+            android:fontFamily="@font/inter"
+            android:padding="12dp" />
+
+        <!-- Total amount donated -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total amount donated"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/inter"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/totalAmountDonated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter total amount"
+            android:textColorHint="#B0BEC5"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/redPrimary"
+            android:fontFamily="@font/inter"
+            android:padding="12dp" />
+
+        <!-- Frequency of donations -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Frequency of donations"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/inter"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/frequencyOfDonations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter frequency"
+            android:textColorHint="#B0BEC5"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/redPrimary"
+            android:fontFamily="@font/inter"
+            android:padding="12dp" />
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#E64E4C"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</FrameLayout>

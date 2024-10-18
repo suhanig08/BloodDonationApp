@@ -48,12 +48,8 @@ private lateinit var auth: FirebaseAuth
 
             if (enteredWeight.isNotEmpty()) {
 
-                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-                val name=sharedPreferences?.getString("name","")
-                if(name!!.isNotEmpty()) {
-                    dbRef.child(name).child("weight")
+                    dbRef.child(auth.currentUser!!.uid).child("weight")
                         .setValue(enteredWeight)
-                }
 
                 // Optional: Show a Toast with the entered weight
                 Toast.makeText(requireContext(), "Weight: $enteredWeight kg", Toast.LENGTH_SHORT).show()

@@ -58,12 +58,9 @@ class BloodGroupFragment : Fragment() {
                 Log.e("UserDetailss",selectedBloodGroup.toString())
                 Log.e("UserDetailss",selectedRhFactor.toString())
 
-                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-                val name=sharedPreferences?.getString("name","")
-                if(name!!.isNotEmpty()) {
-                    dbRef.child(name).child("bloodgroup")
+
+                    dbRef.child(auth.currentUser!!.uid).child("bloodgroup")
                         .setValue(bloodgroup)
-                }
 
                 // Toast to show selected blood group and Rh factor
                 Toast.makeText(

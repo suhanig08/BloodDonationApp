@@ -49,12 +49,8 @@ class HeightFragment : Fragment() {
             if (!TextUtils.isEmpty(heightText)) {
                 // Valid input, proceed to the next fragment (WeightFragment)
 
-                val sharedPreferences=activity?.getSharedPreferences("DonorDet", MODE_PRIVATE)
-                val name=sharedPreferences?.getString("name","")
-                if(name!!.isNotEmpty()) {
-                    dbRef.child(name).child("height")
+                dbRef.child(auth.currentUser!!.uid).child("height")
                         .setValue(heightText)
-                }
 
                 findNavController().navigate(R.id.action_heightFragment_to_weightFragment)
             } else {
