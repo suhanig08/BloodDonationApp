@@ -3,14 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
 
     <application
         android:allowBackup="true"
@@ -22,13 +19,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RedConnect"
         tools:targetApi="31">
+        <activity
+            android:name=".InputDataActivity"
+            android:exported="false" />
+
         <service
-            android:name="FirebaseMessagingService"
+            android:name=".FirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
@@ -37,13 +39,13 @@
             android:exported="false" />
         <activity
             android:name=".QuestionnaireActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".UserDetails"
             android:exported="false" />
         <activity
             android:name=".LocationActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".OtpActivity"
             android:exported="false" />
