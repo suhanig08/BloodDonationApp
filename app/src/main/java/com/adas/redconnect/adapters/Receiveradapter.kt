@@ -1,9 +1,10 @@
 package com.adas.redconnect.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.adas.redconnect.QuestionnaireActivity
 import com.adas.redconnect.databinding.ItemSelectorBinding
 
 class ReceiverAdapter(
@@ -39,7 +40,7 @@ class ReceiverAdapter(
             binding.mobileNumber.text = mobileNumber
             binding.requiredDate.text = requiredDate
             binding.units.text = "$units Units"
-            binding.createdAt.text = "Created at: $createdAt"
+            binding.createdAt.text = " $createdAt"
 
             // Set critical status text and color
             binding.criticalStatus.text = if (isCritical) "Critical: Yes" else "Critical: No"
@@ -50,6 +51,12 @@ class ReceiverAdapter(
 
             // Handle accept button click
             binding.acceptButton.setOnClickListener {
+                // Navigate to QuestionnaireActivity
+                val context = binding.root.context
+                val intent = Intent(context, QuestionnaireActivity::class.java)
+                context.startActivity(intent)
+
+                // Trigger the callback
                 onAcceptClick(requestData)
             }
         }
