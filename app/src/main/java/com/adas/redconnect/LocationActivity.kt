@@ -135,6 +135,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
             if(choice == "donor"){
+                dbRef.child(auth.currentUser!!.uid).child("address").setValue(binding.locationTv.text.toString())
                 val intent = Intent(this, UserDetails::class.java)
                 startActivity(intent)
                 finish()

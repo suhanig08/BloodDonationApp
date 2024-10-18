@@ -89,6 +89,7 @@ class QuestionnaireActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Please select one", Toast.LENGTH_SHORT).show() // If any question is not answered
             }
+
         }
 
         // Set up Previous button (back button) to show the previous question
@@ -126,7 +127,8 @@ class QuestionnaireActivity : AppCompatActivity() {
         }
 
         if (isEligible) {
-            // User is eligible, you can add logic to proceed to the donation screen if necessary
+            val i=Intent(this,ScheduleAppointment::class.java)
+            startActivity(i)
             finish()
         } else {
             // User is not eligible, navigate to Not Eligible Activity

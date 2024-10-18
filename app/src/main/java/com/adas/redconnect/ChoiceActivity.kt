@@ -47,7 +47,6 @@ class ChoiceActivity : AppCompatActivity() {
             editor.apply()
             val i = Intent(this, DonorAuth::class.java)
             startActivity(i)
-            finish()
         }
 
         binding.hospitalBtn.setOnClickListener {
@@ -55,7 +54,6 @@ class ChoiceActivity : AppCompatActivity() {
             editor.apply()
             val i = Intent(this, HospitalAuth::class.java)
             startActivity(i)
-            finish()
         }
     }
 }
