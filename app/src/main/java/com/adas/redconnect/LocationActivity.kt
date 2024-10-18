@@ -129,6 +129,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun nextClicked(){
         binding.nxtBtn.setOnClickListener {
             val sharedPreferences = getSharedPreferences("ChoicePref", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+
             val choice = sharedPreferences.getString("choice", "donor")
 
 
@@ -142,7 +144,9 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
                 hospDbRef.child("hospital").child(hospName).child("address").setValue(binding
                     .locationTv
                     .text.toString())
-                hospDbRef.child("hospital").child(hospName).child("uid").setValue(uid)
+                editor.putBoolean("hospLoggedIn",true)
+                    .apply()
+                //hospDbRef.child("hospital").child(hospName).child("uid").setValue(uid)
                 startActivity(i)
                 finish()
             }

@@ -30,12 +30,6 @@ class HomeFragment : Fragment() {
     private var homeBinding : FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
