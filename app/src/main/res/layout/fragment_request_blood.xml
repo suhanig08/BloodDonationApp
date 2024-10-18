@@ -45,9 +45,8 @@
         android:id="@+id/editText_mobile_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hospital Mobile Number"
-        android:layout_marginBottom="16dp"
-        android:inputType="phone"/>
+        android:hint="Hospital Name"
+        android:layout_marginBottom="16dp" />
 
     <!-- Blood Group Spinner -->
 
