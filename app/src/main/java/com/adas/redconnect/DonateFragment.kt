@@ -1,10 +1,13 @@
 package com.adas.redconnect
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adas.redconnect.adapters.ReceiverAdapter
@@ -39,7 +42,7 @@ class DonateFragment : Fragment() {
         // Set up RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         receiverAdapter = ReceiverAdapter(requestList) { requestData ->
-            acceptRequest(requestData)
+            acceptRequest(requestData) // Navigate to scheduling activity
         }
         binding.recyclerView.adapter = receiverAdapter
 
@@ -64,19 +67,51 @@ class DonateFragment : Fragment() {
                 val querySnapshot = db.collection("BloodRequests").get().await()
                 val retrievedRequests = mutableListOf<Map<String, Any>>()
                 for (document in querySnapshot.documents) {
-                    document.data?.let { retrievedRequests.add(it) }
+                    val requestData = document.data?.toMutableMap() ?: mutableMapOf()
+                    retrievedRequests.add(requestData)
+
+                    val sharedPreferences = activity?.getSharedPreferences("Request", MODE_PRIVATE)
+                    val editor = sharedPreferences?.edit()
+
+                    editor?.putString("docid",document.id)
+                    editor?.apply()
                 }
                 retrievedRequests // return the fetched requests
             }
         } catch (e: Exception) {
-            // Log the error and return null if the query fails
             withContext(Dispatchers.Main) {
                 Toast.makeText(requireContext(), "Error fetching data: ${e.message}", Toast.LENGTH_SHORT).show()
             }
             null
         }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        if (requestCode == REQUEST_CODE_SCHEDULE && resultCode == RESULT_OK) {
+            // Refresh the list by fetching data from Firestore again
+            refreshBloodRequests()
+        }
+    }
+
+    // Function to refresh blood requests from Firestore
+    private fun refreshBloodRequests() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val bloodRequests = fetchRequestsFromFirestore()
+            if (bloodRequests != null) {
+                requestList.clear()
+                requestList.addAll(bloodRequests)
+                receiverAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(requireContext(), "Error fetching data", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    companion object {
+        const val REQUEST_CODE_SCHEDULE = 1001
+    }
+
+    // Handle the acceptance of the blood request
     private fun acceptRequest(requestData: Map<String, Any>) {
         // Handle the acceptance of the blood request
         Toast.makeText(requireContext(), "Accepted request for ${requestData["blood_group"]}", Toast.LENGTH_SHORT).show()

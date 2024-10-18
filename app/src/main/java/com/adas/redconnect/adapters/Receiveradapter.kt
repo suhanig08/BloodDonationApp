@@ -39,7 +39,7 @@ class ReceiverAdapter(
             binding.mobileNumber.text = mobileNumber
             binding.requiredDate.text = requiredDate
             binding.units.text = "$units Units"
-            binding.createdAt.text = "Created at: $createdAt"
+            binding.createdAt.text = " $createdAt"
 
             // Set critical status text and color
             binding.criticalStatus.text = if (isCritical) "Critical: Yes" else "Critical: No"
