@@ -59,11 +59,6 @@ class HospitalChatFragment : Fragment() {
 
         loadMessages()
 
-        var addAppt : EditText = view.findViewById(R.id.addAppt)
-
-        addAppt.setOnClickListener {
-            sendMessage("SED LYF :( ")
-        }
     }
 
     private fun loadMessages() {
