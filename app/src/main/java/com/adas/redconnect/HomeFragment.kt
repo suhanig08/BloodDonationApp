@@ -63,27 +63,36 @@ class HomeFragment : Fragment() {
         dbRef=FirebaseDatabase.getInstance().getReference("donor")
         auth = FirebaseAuth.getInstance()
 
+        binding.donateBlood.setOnClickListener {
+            val fragment = DonateFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.frameLayout, fragment) // or add()
+            transaction.addToBackStack(null) // if you want to add it to the back stack
+            transaction.commit()
 
-//        dbRef.child(auth.currentUser!!.uid).child("bloodgroup").get().addOnSuccessListener { snapshot ->
-//            if (snapshot.exists()) {
-//                val bloodGroup = snapshot.value.toString()
-//                binding.userBloodGrp.text = bloodGroup
-//            } else {
-//                binding.userBloodGrp.text = "N/A" // Or some placeholder text
-//              }
-//        }.addOnFailureListener {
-//            binding.userBloodGrp.text = "Error" // In case of any errors
-//        }
-//        dbRef.child(auth.currentUser!!.uid).child("name").get().addOnSuccessListener { snapshot ->
-//            if (snapshot.exists()) {
-//                val name= snapshot.value.toString()
-//                binding.userName.text = "Hi, $name!"
-//            } else {
-//                binding.userName.text = "N/A" // Or some placeholder text
-//            }
-//        }.addOnFailureListener {
-//            binding.userName.text = "Error" // In case of any errors
-//        }
+        }
+
+
+        dbRef.child(auth.currentUser!!.uid).child("bloodgroup").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val bloodGroup = snapshot.value.toString()
+                binding.userBloodGrp.text = bloodGroup
+            } else {
+                binding.userBloodGrp.text = "N/A" // Or some placeholder text
+              }
+        }.addOnFailureListener {
+            binding.userBloodGrp.text = "Error" // In case of any errors
+        }
+        dbRef.child(auth.currentUser!!.uid).child("name").get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val name= snapshot.value.toString()
+                binding.userName.text = "Hi, $name!"
+            } else {
+                binding.userName.text = "N/A" // Or some placeholder text
+            }
+        }.addOnFailureListener {
+            binding.userName.text = "Error" // In case of any errors
+        }
 
     }
 
