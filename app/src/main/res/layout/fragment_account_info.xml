@@ -148,7 +148,6 @@
             android:backgroundTint="@color/redPrimary"
             android:padding="12dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:cornerRadius="8dp"/>
+            android:layout_marginTop="20dp" />
     </LinearLayout>
 </FrameLayout>
