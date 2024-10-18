@@ -35,12 +35,13 @@
             android:layout_marginTop="16dp"/>
 
         <EditText
-            android:id="@+id/lastDonation"
+            android:id="@+id/recency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter months"
             android:textColorHint="#B0BEC5"
             android:textColor="#FFFFFF"
+            android:inputType="number"
             android:backgroundTint="@color/redPrimary"
             android:fontFamily="@font/inter"
             android:padding="12dp" />
@@ -56,12 +57,13 @@
             android:layout_marginTop="16dp"/>
 
         <EditText
-            android:id="@+id/numberDonations"
+            android:id="@+id/freq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter number of donations"
             android:textColorHint="#B0BEC5"
             android:textColor="#FFFFFF"
+            android:inputType="number"
             android:backgroundTint="@color/redPrimary"
             android:fontFamily="@font/inter"
             android:padding="12dp" />
@@ -77,12 +79,13 @@
             android:layout_marginTop="16dp"/>
 
         <EditText
-            android:id="@+id/totalAmountDonated"
+            android:id="@+id/monetary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter total amount"
             android:textColorHint="#B0BEC5"
             android:textColor="#FFFFFF"
+            android:inputType="number"
             android:backgroundTint="@color/redPrimary"
             android:fontFamily="@font/inter"
             android:padding="12dp" />
@@ -98,12 +101,13 @@
             android:layout_marginTop="16dp"/>
 
         <EditText
-            android:id="@+id/frequencyOfDonations"
+            android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter frequency"
             android:textColorHint="#B0BEC5"
             android:textColor="#FFFFFF"
+            android:inputType="number"
             android:backgroundTint="@color/redPrimary"
             android:fontFamily="@font/inter"
             android:padding="12dp" />
