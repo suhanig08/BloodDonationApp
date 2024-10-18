@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HospitalChatFragment">
+    android:id="@+id/hospitalChatFragment"
+    tools:context=".fragments.HospitalChatFragment"
+    >
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/usersRV"
+        android:id="@+id/appointmentsRv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/each_user"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/appointment_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/chat_appt_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
+
+    <EditText
+        android:id="@+id/addAppt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ADD ANNOUNCEMENT"/>
+
+
+</FrameLayout>
