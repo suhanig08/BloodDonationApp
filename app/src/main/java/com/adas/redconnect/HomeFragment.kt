@@ -20,91 +20,40 @@ import com.google.firebase.database.ValueEventListener
 class HomeFragment : Fragment() {
 
     private lateinit var database: FirebaseDatabase
-    private lateinit var dbRef: DatabaseReference
     private lateinit var auth: FirebaseAuth
-    //private lateinit var recyclerView: RecyclerView
-    private lateinit var appointmentsAdapter: AppointmentsAdapter
-    private lateinit var appointmentsList: MutableList<Appointment>
-    private var homeBinding : FragmentHomeBinding? = null
+    private var homeBinding: FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
         homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
-//        binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
-//
-//        appointmentsList = mutableListOf()
-//        appointmentsAdapter = AppointmentsAdapter(appointmentsList)
-//        binding.appointmentsRv.adapter = appointmentsAdapter
-//
-//        //addAppt = view.findViewById(R.id.addAppointment)
-//
-//        loadMessages()
-//
-////        addAppt.setOnClickListener {
-////            sendMessage("Hello")
-////        }
+        loadAppointment()
 
         return binding.root
     }
-   
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        dbRef=FirebaseDatabase.getInstance().getReference("donor")
-        auth = FirebaseAuth.getInstance()
-
-
-//        dbRef.child(auth.currentUser!!.uid).child("bloodgroup").get().addOnSuccessListener { snapshot ->
-//            if (snapshot.exists()) {
-//                val bloodGroup = snapshot.value.toString()
-//                binding.userBloodGrp.text = bloodGroup
-//            } else {
-//                binding.userBloodGrp.text = "N/A" // Or some placeholder text
-//              }
-//        }.addOnFailureListener {
-//            binding.userBloodGrp.text = "Error" // In case of any errors
-//        }
-//        dbRef.child(auth.currentUser!!.uid).child("name").get().addOnSuccessListener { snapshot ->
-//            if (snapshot.exists()) {
-//                val name= snapshot.value.toString()
-//                binding.userName.text = "Hi, $name!"
-//            } else {
-//                binding.userName.text = "N/A" // Or some placeholder text
-//            }
-//        }.addOnFailureListener {
-//            binding.userName.text = "Error" // In case of any errors
-//        }
-
-    }
-
-    // Function to load appointments from Firebase
-    private fun loadMessages() {
+    private fun loadAppointment() {
         val appointmentsRef = database.getReference("appointments")
 
-        appointmentsRef.addValueEventListener(object : ValueEventListener {
+        appointmentsRef.orderByChild("donorId").equalTo(auth.currentUser?.uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                appointmentsList.clear()
-                for (messageSnapshot in snapshot.children) {
-                    val message = messageSnapshot.getValue(Appointment::class.java)
-                    message?.let { appointmentsList.add(it) }
+                if (snapshot.exists()) {
+                    val appointment = snapshot.children.firstOrNull()?.getValue(Appointment::class.java)
+                    appointment?.let {
+                        bindAppointmentToView(it)
+                    }
+                } else {
+                    // Handle case where no appointment is found
+                    binding.hospitalName.text = "No appointments found"
+                    binding.apptDate.text = ""
+                    binding.apptTime.text = ""
                 }
-                appointmentsAdapter.notifyDataSetChanged()
-                //recyclerView.scrollToPosition(appointmentsList.size - 1)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -113,23 +62,35 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun sendMessage(messageText: String) {
+    private fun bindAppointmentToView(appointment: Appointment) {
 
-        auth = FirebaseAuth.getInstance()
-        val appointmentsRef = database.getReference("appointments")
-        val appointmentId = appointmentsRef.push().key ?: return
-        val appointment = Appointment(
-            id = appointmentId,
-            hospitalId = "",
-            donorId = auth.currentUser?.uid ?: "x",
-            hospitalName = "",
-            msg = "HELLO WORLD :) ",
-            donorBloodType = "xx",
-            timestamp = System.currentTimeMillis().toString()
-        )
+            binding.hospitalName.text = appointment.hospitalName
+            binding.apptDate.text = appointment.date // Assuming you have a date property
+            binding.apptTime.text = appointment.time // Assuming you have a time property
+            // Set other properties as needed
 
-        // Save message to Firebase
-        appointmentsRef.child(appointmentId).setValue(appointment)
+        binding.chatButton.setOnClickListener {
+            openChatFragment(appointment.id)
+        }
     }
-            
+
+    private fun openChatFragment(appointmentId: String) {
+        val chatFragment = ChatFragment() // Replace with your actual ChatFragment class
+        val bundle = Bundle().apply {
+            putString("appointmentId", appointmentId) // Pass the appointment ID
+        }
+        chatFragment.arguments = bundle
+
+        // Use FragmentManager or Navigation Component to open the fragment
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.HomeFragment, chatFragment) // Replace with your container ID
+            .addToBackStack(null) // Add to back stack for navigation
+            .commit()
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        homeBinding = null // Prevent memory leaks
+    }
 }
