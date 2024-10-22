@@ -51,35 +51,48 @@ class InputDataActivity : AppCompatActivity() {
 
     suspend fun makePredictionRequest() {
         // Example values for recency, frequency, monetary, and time
-        val donationRequest = DonationRequest(binding.recency.text.toString().toInt(), binding.freq
-            .text.toString().toInt(),
-            binding.monetary.text.toString().toDouble(),
-            binding.time.text.toString().toInt())
+        
+        if(binding.recency.text.toString().isNotEmpty() && binding.freq.text.toString()
+            .isNotEmpty() && binding.monetary.text.toString()
+                .isNotEmpty() && binding.time.text.toString()
+                .isNotEmpty()){
+                    val donationRequest = DonationRequest(binding.recency.text.toString().toInt(), binding.freq
+                        .text.toString().toInt(),
+                        binding.monetary.text.toString().toDouble(),
+                        binding.time.text.toString().toInt())
+                    val response = apiService.predictDonation(donationRequest)
+                    Log.i("donation", donationRequest.toString())
+        
+                    // Handle the response
+                    if (response.isSuccessful) {
+                        Log.i("rawResponse", "${response.raw()}")
+                        val predictionResponse = response.body()
+                        Log.i("response", "${response.body()}")
+                        Log.i("code", "${response.code()}")
+        //
+                        if (predictionResponse != null) {
+                            Log.i("RawResponse", "$predictionResponse")
+                            val probability = predictionResponse.probability
+                        }
+                        predictionResponse?.let {
+                            val prob = it.probability
+                            if(prob > 0.6){
+                                Toast.makeText(this, "You are eligible, $prob", Toast.LENGTH_SHORT).show()
+                            } else{
+                                Toast.makeText(this, "Not Eligible, $prob", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Log.e("retrofitError", "${response.errorBody()?.string()}")
+                    }
+        } else{
+            Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+        }
+        
 //        val donationRequest = DonationRequest(1, 20, 3.20, 2)
-        Log.i("donation", donationRequest.toString())
+        
 
         // Call the API
-        val response = apiService.predictDonation(donationRequest)
-
-        // Handle the response
-        if (response.isSuccessful) {
-            val predictionResponse = response.body()
-            Log.i("response", "${response.body()}")
-//
-            if (predictionResponse != null) {
-                Log.i("RawResponse", "$predictionResponse")
-                val probability = predictionResponse.probability
-            }
-            predictionResponse?.let {
-                val prob = it.probability
-                if(prob > 0.6){
-                    Toast.makeText(this, "You are eligible, $prob", Toast.LENGTH_SHORT).show()
-                } else{
-                    Toast.makeText(this, "Not Eligible, $prob", Toast.LENGTH_SHORT).show()
-                }
-            }
-        } else {
-            Log.e("retrofitError", "${response.errorBody()?.string()}")
-        }
+        
     }
 }

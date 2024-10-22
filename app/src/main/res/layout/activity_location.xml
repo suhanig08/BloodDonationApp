@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkGrey"
     tools:context=".LocationActivity">
 
     <fragment
@@ -43,8 +42,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialDivider"/>
 
-    <EditText
+    <TextView
         android:editable="false"
+        android:singleLine="true"
+        android:ellipsize="marquee"
         android:hint="Location"
         android:textColorHint="#4E4E4E"
         android:id="@+id/locationTv"
@@ -75,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="N e x t"
+        android:text="Next"
         android:background="@drawable/btn_unselectable_bg"
         android:alpha="0.2"
         android:clickable="false"

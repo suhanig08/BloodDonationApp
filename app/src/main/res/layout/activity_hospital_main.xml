@@ -21,7 +21,7 @@
         app:itemIconTint="@drawable/item_selector"
         app:labelVisibilityMode="unlabeled"
         android:id="@+id/bottomNav"
-        android:background="#121212"
+        android:backgroundTint="@color/white"
         android:layout_width="0dp"
         app:menu="@menu/bottom_nav_hosp"
         android:layout_height="wrap_content"
