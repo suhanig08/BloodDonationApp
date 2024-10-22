@@ -1,59 +1,164 @@
+
 package com.adas.redconnect
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.adas.redconnect.Appointment
+import com.adas.redconnect.adapters.ReceiverAdapter
+import com.adas.redconnect.databinding.FragmentDonateBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DonateFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DonateFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentDonateBinding
+    private lateinit var receiverAdapter: ReceiverAdapter
+    private lateinit var requestList: MutableList<Map<String, Any>>
+    private val db = FirebaseFirestore.getInstance()
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_donate, container, false)
+        binding = FragmentDonateBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DonateFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DonateFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requestList = mutableListOf()
+
+        // Set up RecyclerView
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        receiverAdapter = ReceiverAdapter(requestList) { requestData ->
+            acceptRequest(requestData) // Navigate to scheduling activity
+        }
+        binding.recyclerView.adapter = receiverAdapter
+
+        // Initialize Firebase components
+        mAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+        // Fetch data from Firestore using a suspend function
+        CoroutineScope(Dispatchers.Main).launch {
+            val bloodRequests = fetchRequestsFromFirestore()
+            if (bloodRequests != null) {
+                requestList.clear()
+                requestList.addAll(bloodRequests)
+                receiverAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(requireContext(), "Error fetching data", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // Suspend function to fetch requests from Firestore
+    private suspend fun fetchRequestsFromFirestore(): List<Map<String, Any>>? {
+        return try {
+            // Fetch data from Firestore on the IO thread
+            withContext(Dispatchers.IO) {
+                val querySnapshot = db.collection("BloodRequests").get().await()
+                val retrievedRequests = mutableListOf<Map<String, Any>>()
+                for (document in querySnapshot.documents) {
+                    val requestData = document.data?.toMutableMap() ?: mutableMapOf()
+                    retrievedRequests.add(requestData)
+
+                    val sharedPreferences = activity?.getSharedPreferences("Request", MODE_PRIVATE)
+                    val editor = sharedPreferences?.edit()
+
+                    editor?.putString("docid",document.id)
+                    editor?.apply()
                 }
+                retrievedRequests // return the fetched requests
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "Error fetching data: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+            null
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_SCHEDULE && resultCode == RESULT_OK) {
+            // Refresh the list by fetching data from Firestore again
+            refreshBloodRequests()
+        }
+    }
+
+    // Function to refresh blood requests from Firestore
+    private fun refreshBloodRequests() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val bloodRequests = fetchRequestsFromFirestore()
+            if (bloodRequests != null) {
+                requestList.clear()
+                requestList.addAll(bloodRequests)
+                receiverAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(requireContext(), "Error fetching data", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    companion object {
+        const val REQUEST_CODE_SCHEDULE = 1001
+    }
+
+
+    private fun acceptRequest(requestData: Map<String, Any>) {
+        // Extract the necessary data (Hospital name, Date, Time, Blood Group) from requestData
+        val hospitalName = requestData["hospitalName"] as? String ?: "Unknown Hospital"
+        val date = requestData["date"] as? String ?: "Unknown Date"
+        val time = requestData["time"] as? String ?: "Unknown Time"
+        val bloodGroup = requestData["blood_group"] as? String ?: "Unknown Blood Group"
+
+        // Trigger sendMessage when a request is accepted
+        sendMessage(hospitalName, date, time, bloodGroup)
+    }
+
+    // Function to send a message and store the appointment details in Firebase
+    private fun sendMessage(hospitalName: String, date: String, time: String, bloodGroup: String) {
+        val appointmentsRef = database.getReference("appointments")
+        val appointmentId = appointmentsRef.push().key ?: return
+
+        // Create an appointment object with additional fields
+        val appointment = Appointment(
+            id = appointmentId,
+            hospitalId = "", // You can set this if you have a hospital ID in requestData
+            donorId = mAuth.currentUser?.uid ?: "Unknown Donor",
+            hospitalName = hospitalName,
+            msg = "Accepted request for $bloodGroup",
+            donorBloodType = bloodGroup,
+            timestamp = System.currentTimeMillis().toString(),
+            date = date, // Include date from requestData
+            time = time  // Include time from requestData
+        )
+
+        // Save message to Firebase
+        appointmentsRef.child(appointmentId).setValue(appointment)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Appointment created for $hospitalName on $date at $time", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to create appointment", Toast.LENGTH_SHORT).show()
             }
     }
 }

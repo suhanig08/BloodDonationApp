@@ -1,4 +1,4 @@
-package com.adas.redconnect
+package com.adas.redconnect.fragments
 
 import android.os.Bundle
 import android.os.StrictMode
@@ -8,25 +8,20 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.adas.redconnect.AccessObject
+import com.adas.redconnect.R
 import com.adas.redconnect.api.Notification
 import com.adas.redconnect.api.NotificationApi
 import com.adas.redconnect.api.NotificationData
-import com.adas.redconnect.api.NotificationInterface
 import com.adas.redconnect.databinding.FragmentRequestBloodBinding
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
