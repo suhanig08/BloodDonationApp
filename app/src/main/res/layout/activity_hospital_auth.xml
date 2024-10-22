@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/darkGrey"
     android:layout_height="match_parent"
     tools:context=".DonorAuth">
     <LinearLayout
+        android:elevation="5dp"
         android:id="@+id/authLL1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        android:background="#F23B3B">
+        android:background="@color/redPrimary">
 
         <ImageView
             android:id="@+id/authImg"
@@ -23,6 +23,7 @@
             android:layout_marginTop="40dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
+            android:background="@color/transparent"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -32,7 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Red Connect"
-            android:fontFamily="@font/poppins_sb"
+            android:background="@color/transparent"
+            android:fontFamily="@font/mona_sb"
             app:layout_constraintTop_toBottomOf="@+id/authImg"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -40,45 +42,33 @@
             android:textSize="25sp"/>
     </LinearLayout>
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/hospNameEt"
+        style="@style/etStyle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
+        android:layout_height="50dp"
+        android:hint="Name"
+        android:layout_marginHorizontal="20dp"
+        android:padding="15dp"
+        android:textColorHint="@color/hintColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authLL1" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/nextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.2"
+        android:background="@drawable/btn_unselectable_bg"
+        android:layout_margin="20dp"
+        android:text="NEXT"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authLL1">
-
-        <EditText
-            android:id="@+id/hospNameEt"
-            android:singleLine="true"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="170dp"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/edit_text_border"
-            android:hint="Name"
-            android:textSize="15sp"
-            android:padding="10dp"
-            android:textColorHint="@color/hintColor"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/nextBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="200dp"
-            android:background="@drawable/btn_unselectable_bg"
-            android:alpha="0.2"
-            android:text="NEXT" />
-
-    </LinearLayout>
-
-
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 

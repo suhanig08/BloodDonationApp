@@ -3,8 +3,28 @@
     <style name="Base.Theme.RedConnect" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:background">@color/backgroundPrimary</item>
+        <item name="android:fontFamily">@font/mona</item>
     </style>
 
     <style name="Theme.RedConnect" parent="Base.Theme.RedConnect" />
+    <style name="btnStyle">
+        <item name="android:background">@drawable/btn_bg</item>
+        <item name="android:fontFamily">@font/mona_sb</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="etStyle">
+        <item name="android:background">@drawable/edit_text_border</item>
+        <item name="android:elevation">3dp</item>
+    </style>
+
+    <style name="otpBg">
+        <item name="android:background">@drawable/otp_box_background</item>
+    </style>
+
+    <style name="boldTv">
+        <item name="android:fontFamily">@font/mona_sb</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
 </resources>

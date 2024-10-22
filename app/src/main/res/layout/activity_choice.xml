@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkGrey"
     tools:context=".ChoiceActivity">
 
     <ImageView
@@ -22,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="100dp"
         android:text="Welcome!"
-        android:fontFamily="@font/poppins_sb"
+        android:fontFamily="@font/mona_sb"
         android:textSize="30sp"
         android:textColor="#E62D49"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,9 +32,10 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="25dp"
         android:text="Are you a Blood Donor or a Hospital in need?"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/welcomeTv" />
@@ -48,24 +48,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/donorBtn"
+            style="@style/btnStyle"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="20dp"
-            android:textColor="@color/white"
             android:backgroundTint="@color/redPrimary"
             android:text="Donor"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/hospitalBtn"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="50dp"
             android:layout_marginStart="20dp"
-            android:textColor="@color/white"
             android:backgroundTint="@color/redPrimary"
+            style="@style/btnStyle"
             android:text="Hospital" />
     </LinearLayout>
 

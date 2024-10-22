@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/darkGrey"
     android:layout_height="match_parent"
     tools:context=".DonorAuth">
     <LinearLayout
@@ -15,9 +14,10 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        android:background="#D43737">
+        android:background="@color/redPrimary">
 
         <ImageView
+            android:background="@color/transparent"
             android:id="@+id/authImg"
             android:src="@mipmap/ic_launcher_foreground"
             android:layout_marginTop="40dp"
@@ -26,13 +26,14 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:background="@color/transparent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="50dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Red Connect"
-            android:fontFamily="@font/poppins_sb"
+            android:fontFamily="@font/mona_sb"
             app:layout_constraintTop_toBottomOf="@+id/authImg"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -48,71 +49,14 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="vertical">
 
-<!--        <LinearLayout-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:weightSum="4"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:gravity="center">-->
-
-<!--            &lt;!&ndash; OTP Input Boxes &ndash;&gt;-->
-<!--            <EditText-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:inputType="number"-->
-<!--                android:maxLength="1"-->
-<!--                android:background="@drawable/otp_box_background"-->
-<!--                android:id="@+id/otp_box1"/>-->
-
-<!--            <EditText-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:inputType="number"-->
-<!--                android:maxLength="1"-->
-<!--                android:background="@drawable/otp_box_background"-->
-<!--                android:id="@+id/otp_box2"/>-->
-
-<!--            <EditText-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:inputType="number"-->
-<!--                android:maxLength="1"-->
-<!--                android:background="@drawable/otp_box_background"-->
-<!--                android:id="@+id/otp_box3"/>-->
-
-<!--            <EditText-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginRight="20dp"-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:inputType="number"-->
-<!--                android:maxLength="1"-->
-<!--                android:background="@drawable/otp_box_background"-->
-<!--                android:id="@+id/otp_box4"/>-->
-<!--        </LinearLayout>-->
         <TextView
             android:paddingTop="10dp"
+            android:layout_margin="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enter Verification Code"
-            android:fontFamily="@font/poppins_l"
+            android:fontFamily="@font/mona_m"
             android:textSize="20sp"
-            android:textColor="#C5BFBF"
             android:textStyle="bold"
             android:gravity="center"
             android:paddingBottom="8dp"/>
@@ -136,48 +80,52 @@
             android:orientation="horizontal">
 
             <EditText
+                android:cursorVisible="false"
                 android:id="@+id/otp_box1"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/otp_box_background"
+                style="@style/otpBg"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="24sp" />
 
             <EditText
+                android:cursorVisible="false"
                 android:id="@+id/otp_box2"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/otp_box_background"
+                style="@style/otpBg"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="24sp" />
 
             <EditText
+                android:cursorVisible="false"
                 android:id="@+id/otp_box3"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/otp_box_background"
+                style="@style/otpBg"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="24sp" />
 
             <EditText
+                android:cursorVisible="false"
                 android:id="@+id/otp_box4"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/otp_box_background"
+                style="@style/otpBg"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
@@ -189,19 +137,20 @@
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/otp_box_background"
+                style="@style/otpBg"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="24sp" />
 
             <EditText
+                android:cursorVisible="false"
                 android:id="@+id/otp_box6"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/otp_box_background"
+                style="@style/otpBg"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
@@ -210,12 +159,13 @@
 
         <!-- Resend OTP Link -->
         <TextView
+            android:layout_marginStart="16dp"
             android:id="@+id/resendTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Didn’t receive the OTP? Resend OTP"
             android:textSize="14sp"
-            android:textColor="#6666FF"
+            android:textColor="#66FFFF"
             android:gravity="center"/>
 
         <!--        <AutoCompleteTextView-->
@@ -232,11 +182,12 @@
         <!--            />-->
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/NextBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/redPrimary"
+
+            style="@style/btnStyle"
             android:layout_margin="20dp"
             android:text="Next"/>
 
