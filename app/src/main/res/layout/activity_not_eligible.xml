@@ -3,14 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
-    android:background="@color/darkGrey"
     android:padding="20dp">
 
     <!-- Icon at the top -->
     <ImageView
+        android:background="@drawable/stop_circle_bg"
+        android:elevation="5dp"
         android:id="@+id/notEligibleIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:padding="20dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/stophand_icon" />
 
@@ -20,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/notEligibleIcon"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true"
         android:text="Oops! You're not eligible to donate blood at this time."
         android:textColor="@color/red"
@@ -31,17 +33,19 @@
         android:fontFamily="@font/inter_sb" />
 
     <!-- Back Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/btnStyle"
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/notEligibleMessage"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="@color/red"
+        android:layout_marginTop="80dp"
         android:text="Back to Home"
+        android:textAllCaps="false"
+        android:padding="20dp"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:fontFamily="@font/inter_sb"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
