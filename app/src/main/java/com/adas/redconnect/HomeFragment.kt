@@ -15,6 +15,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
+    private lateinit var dbRef: DatabaseReference
     private var homeBinding: FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
 
@@ -99,7 +100,6 @@ class HomeFragment : Fragment() {
         }
 
 
-        return binding.root
     }
 
     private fun loadAppointments() {
