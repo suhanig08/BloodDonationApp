@@ -1,13 +1,12 @@
 package com.adas.redconnect
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
@@ -16,6 +15,7 @@ class ScheduleAppointment : AppCompatActivity() {
     private lateinit var confirmButton: Button
     private lateinit var selectedDate: String
     private lateinit var selectedTime: String
+    private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private var requestId: String? = null // The ID of the blood request
 
@@ -56,14 +56,18 @@ class ScheduleAppointment : AppCompatActivity() {
             return
         }
 
+        // Generate a unique ID for the new appointment
+        val appointmentId = db.collection("Appointments").document().id
+
         // Fetch the blood request document
         db.collection("BloodRequests").document(requestId!!).get().addOnSuccessListener { document ->
             if (document.exists()) {
                 // Get the request data
                 val requestData = document.data
 
-                // Create appointment data
+                // Create appointment data with the generated appointmentId
                 val appointmentData = hashMapOf(
+                    "appointmentId" to appointmentId, // Adding the unique appointment ID
                     "blood_group" to requestData?.get("blood_group"),
                     "mobile_number" to requestData?.get("mobile_number"),
                     "required_date" to requestData?.get("required_date"),
@@ -71,11 +75,13 @@ class ScheduleAppointment : AppCompatActivity() {
                     "is_critical" to requestData?.get("is_critical"),
                     "created_at" to requestData?.get("created_at"),
                     "scheduled_date" to selectedDate,
-                    "scheduled_time" to selectedTime
+                    "scheduled_time" to selectedTime,
+                    "donorId" to (auth.currentUser?.uid ?: ""),
+                    "hospitalId" to requestData?.get("hospitalId")
                 )
 
-                // Add to Appointments collection
-                db.collection("Appointments").add(appointmentData).addOnSuccessListener {
+                // Add to Appointments collection with the generated appointmentId
+                db.collection("Appointments").document(appointmentId).set(appointmentData).addOnSuccessListener {
                     // Remove the request from BloodRequests collection after confirming appointment
                     db.collection("BloodRequests").document(requestId!!).delete().addOnSuccessListener {
                         Toast.makeText(this, "Appointment scheduled successfully!", Toast.LENGTH_SHORT).show()

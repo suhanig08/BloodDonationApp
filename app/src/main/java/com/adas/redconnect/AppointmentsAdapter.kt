@@ -9,46 +9,98 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import com.adas.redconnect.databinding.AppointmentItemBinding
 
-class AppointmentsAdapter(private val appointmentsList: List<Appointment>,
-                          private val fragmentManager: FragmentManager):
-    RecyclerView.Adapter<AppointmentsAdapter.AppointmentsViewHolder>() {
+class AppointmentsAdapter(private val appointmentsList: List<Map<String, Any>>,
+                          private val fragmentManager: FragmentManager,
+                          private val currentScreen: String,
+                          private val onAcceptClick: (Map<String, Any>) -> Unit):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    inner class AppointmentsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val hospitalName: TextView = itemView.findViewById(R.id.hospitalName)
-        val apptDate: TextView = itemView.findViewById(R.id.apptDate)
-        val apptTime: TextView = itemView.findViewById(R.id.apptTime)
-        val chatButton : ImageButton = itemView.findViewById(R.id.chatButton)
+    private val VIEW_TYPE_DONOR = 1
+    private val VIEW_TYPE_HOSPITAL = 2
 
+    inner class AppointmentsViewHolder_Hospital(private val binding : AppointmentItemBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(requestData : Map<String, Any>){
+            val appt_ID = requestData["appointmentId"] as? String ?: "N/A"
+            val hospitalName = requestData["hospitalName"] as? String ?: "N/A"
+            val selectedDate = requestData["scheduled_date"] as? String ?: "N/A"
+            val selectedTime = requestData["scheduled_time"] as? String ?: "N/A"
+
+            binding.hospitalName.text = hospitalName
+            binding.apptDate.text = selectedDate
+            binding.apptTime.text = selectedTime
+
+            binding.chatButton.setOnClickListener {
+                val chatFragment = ChatFragment.newInstance(appt_ID)
+
+                // Replace the current fragment with the ChatFragment
+                fragmentManager.beginTransaction()
+                    .replace(R.id.hospitalChatFragment, chatFragment)
+                    .addToBackStack(null) // Optional: add to back stack to enable back navigation
+                    .commit()
+
+                onAcceptClick(requestData)
+
+            }
+        }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppointmentsViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.appointment_item, parent, false)
-        return AppointmentsViewHolder(view)
+    inner class AppointmentsViewHolder_Donor(private val binding : AppointmentItemBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(requestData : Map<String, Any>){
+            val appt_ID = requestData["appointmentId"] as? String ?: "N/A"
+            val hospitalName = requestData["hospitalName"] as? String ?: "N/A"
+            val selectedDate = requestData["scheduled_date"] as? String ?: "N/A"
+            val selectedTime = requestData["scheduled_time"] as? String ?: "N/A"
+
+            binding.hospitalName.text = hospitalName
+            binding.apptDate.text = selectedDate
+            binding.apptTime.text = selectedTime
+
+            binding.chatButton.setOnClickListener {
+                val chatFragment = ChatFragment.newInstance(appt_ID)
+
+                // Replace the current fragment with the ChatFragment
+                fragmentManager.beginTransaction()
+                    .replace(R.id.HomeFragment, chatFragment)
+                    .addToBackStack(null) // Optional: add to back stack to enable back navigation
+                    .commit()
+
+                onAcceptClick(requestData)
+
+            }
+        }
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val binding = AppointmentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return if (viewType == VIEW_TYPE_HOSPITAL) {
+            AppointmentsViewHolder_Hospital(binding)
+        } else {
+            AppointmentsViewHolder_Donor(binding)
+        }
     }
 
     override fun getItemCount(): Int {
         return appointmentsList.size
     }
 
-    override fun onBindViewHolder(holder: AppointmentsViewHolder, position: Int) {
-        val appointment = appointmentsList[position]
-        holder.hospitalName.text = appointment.hospitalName
-        holder.apptDate.text = appointment.date
-        holder.apptTime.text = appointment.time
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        holder.chatButton.setOnClickListener {
+        if (holder  is AppointmentsViewHolder_Hospital)
+            holder.bind(appointmentsList[position])
+        else if (holder is AppointmentsViewHolder_Donor)
+            holder.bind(appointmentsList[position])
 
-            val chatFragment = ChatFragment.newInstance(appointment.id)
+    }
 
-            // Replace the current fragment with the ChatFragment
-            fragmentManager.beginTransaction()
-                .replace(R.id.hospitalChatFragment, chatFragment)
-                .addToBackStack(null) // Optional: add to back stack to enable back navigation
-                .commit()
-
-        }
+    override fun getItemViewType(position: Int): Int {
+         return if (currentScreen == "donor") VIEW_TYPE_DONOR else VIEW_TYPE_HOSPITAL
     }
 }
