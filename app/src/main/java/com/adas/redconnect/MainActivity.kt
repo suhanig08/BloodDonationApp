@@ -1,6 +1,5 @@
 package com.adas.redconnect
 
-import DonateFragment
 import android.Manifest
 import android.content.Intent
 import android.os.Build

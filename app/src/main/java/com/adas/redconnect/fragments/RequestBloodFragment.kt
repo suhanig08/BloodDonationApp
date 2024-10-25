@@ -14,6 +14,7 @@ import com.adas.redconnect.api.Notification
 import com.adas.redconnect.api.NotificationApi
 import com.adas.redconnect.api.NotificationData
 import com.adas.redconnect.databinding.FragmentRequestBloodBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,7 @@ class RequestBloodFragment : Fragment() {
     private var _binding: FragmentRequestBloodBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
+    private val auth : FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,7 +84,8 @@ class RequestBloodFragment : Fragment() {
             "required_date" to requiredDate,
             "units" to units,
             "is_critical" to isCritical,
-            "created_at" to currentTime // Include both date and time of request
+            "created_at" to currentTime, // Include both date and time of request
+            "hospitalId" to (auth.currentUser?.uid ?: "")
         )
 
         // Launch coroutine to add the request to Firestore
