@@ -114,6 +114,11 @@ class ProfileFragment : Fragment() {
         editor?.putBoolean("isLoggedIn", false)?.apply()
         val intent = Intent(context, ChoiceActivity::class.java)
         startActivity(intent)
+
+        FirebaseAuth.getInstance().signOut()
+
         activity?.finish()
+
+
     }
 }

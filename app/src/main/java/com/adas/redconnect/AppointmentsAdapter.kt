@@ -1,5 +1,7 @@
 package com.adas.redconnect
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.adas.redconnect.databinding.AppointmentItemBinding
@@ -14,7 +20,8 @@ import com.adas.redconnect.databinding.AppointmentItemBinding
 class AppointmentsAdapter(private val appointmentsList: List<Map<String, Any>>,
                           private val fragmentManager: FragmentManager,
                           private val currentScreen: String,
-                          private val onAcceptClick: (Map<String, Any>) -> Unit):
+                          private val context : Context,
+                          private val onConfirmClick: (Map<String, Any>) -> Unit):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_DONOR = 1
@@ -42,8 +49,29 @@ class AppointmentsAdapter(private val appointmentsList: List<Map<String, Any>>,
                     .addToBackStack(null) // Optional: add to back stack to enable back navigation
                     .commit()
 
-                onAcceptClick(requestData)
 
+            }
+
+            binding.tickButton.visibility = View.VISIBLE
+            binding.tickButton.setOnClickListener {
+                AlertDialog.Builder(context).apply {
+                    setTitle("Confirmation")
+                    setMessage("Are you sure you want to confirm this action?")
+
+                    // Add a Confirm button with an action
+                    setPositiveButton("Confirm") { dialog, _ ->
+
+
+                        onConfirmClick(requestData)
+                        dialog.dismiss()  // Close the dialog
+                    }
+
+                    // Add a Cancel button to dismiss the dialog
+                    setNegativeButton("Cancel") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+
+                }.create().show()
             }
         }
 
@@ -70,8 +98,6 @@ class AppointmentsAdapter(private val appointmentsList: List<Map<String, Any>>,
                     .replace(R.id.HomeFragment, chatFragment)
                     .addToBackStack(null) // Optional: add to back stack to enable back navigation
                     .commit()
-
-                onAcceptClick(requestData)
 
             }
         }

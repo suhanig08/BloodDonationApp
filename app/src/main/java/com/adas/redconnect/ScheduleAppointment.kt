@@ -83,12 +83,13 @@ class ScheduleAppointment : AppCompatActivity() {
                 // Add to Appointments collection with the generated appointmentId
                 db.collection("Appointments").document(appointmentId).set(appointmentData).addOnSuccessListener {
                     // Remove the request from BloodRequests collection after confirming appointment
-                    db.collection("BloodRequests").document(requestId!!).delete().addOnSuccessListener {
-                        Toast.makeText(this, "Appointment scheduled successfully!", Toast.LENGTH_SHORT).show()
-                        finish() // Close the activity after successful scheduling
-                    }.addOnFailureListener { e ->
-                        Toast.makeText(this, "Failed to delete blood request: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
+//                    db.collection("BloodRequests").document(requestId!!).delete().addOnSuccessListener {
+//                        Toast.makeText(this, "Appointment scheduled successfully!", Toast.LENGTH_SHORT).show()
+//                        finish() // Close the activity after successful scheduling
+//                    }.addOnFailureListener { e ->
+//                        Toast.makeText(this, "Failed to delete blood request: ${e.message}", Toast.LENGTH_SHORT).show()
+//                    }
+                                finish()
                 }.addOnFailureListener { e ->
                     Toast.makeText(this, "Failed to schedule appointment: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
