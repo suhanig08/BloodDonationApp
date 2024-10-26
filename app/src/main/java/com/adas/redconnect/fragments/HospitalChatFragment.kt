@@ -1,10 +1,13 @@
 package com.adas.redconnect.fragments
 
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adas.redconnect.Appointment
@@ -21,6 +24,7 @@ class HospitalChatFragment : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     private val db = FirebaseFirestore.getInstance()
     private var listenerRegistration: ListenerRegistration? = null
+    private var requestId: String? = null // The ID of the blood request
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +42,28 @@ class HospitalChatFragment : Fragment() {
 
         // Set up RecyclerView
         hospitalChatBinding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
-        appointmentsAdapter = AppointmentsAdapter(appointmentsList, fragmentManager = parentFragmentManager, currentScreen = "hospital") { requestData ->
-            // Handle item click if needed
+        appointmentsAdapter = AppointmentsAdapter(appointmentsList, fragmentManager = parentFragmentManager,
+            currentScreen = "hospital", requireContext()) { requestData ->
+            val sharedPreferences = requireContext().getSharedPreferences("Request", MODE_PRIVATE)
+            val requestId = sharedPreferences.getString("docid", null)
+
+            if (requestId != null) {
+                db.collection("BloodRequests").document(requestId)
+                    .delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Blood request deleted successfully!", Toast.LENGTH_SHORT).show()
+
+                        // Remove the item from the list and notify the adapter
+                        appointmentsList.remove(requestData)
+                        appointmentsAdapter.notifyDataSetChanged() // Refresh the adapter to update the UI
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(requireContext(), "Failed to delete blood request: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(requireContext(), "Request ID not found in SharedPreferences", Toast.LENGTH_SHORT).show()
+            }
+
         }
         hospitalChatBinding.appointmentsRv.adapter = appointmentsAdapter
 

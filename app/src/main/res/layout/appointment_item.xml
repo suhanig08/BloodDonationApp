@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,8 +24,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:text="null"
-                />
+                android:text="null" />
 
             <TextView
                 android:id="@+id/apptDate"
@@ -48,14 +45,26 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/tickButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:padding="5dp"
+            android:paddingEnd="12dp"
+            android:layout_marginEnd="5dp"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:src="@drawable/address"
+            android:visibility="gone" />
+
+        <ImageButton
             android:id="@+id/chatButton"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:padding="5dp"
             android:paddingEnd="12dp"
             android:layout_gravity="center"
             android:background="@color/transparent"
-            android:src="@drawable/arrow_right"/>
-
+            android:src="@drawable/arrow_right" />
 
     </LinearLayout>
 

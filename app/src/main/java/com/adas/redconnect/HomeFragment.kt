@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
 
         // Set up RecyclerView
         binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
-        appointmentsAdapter = AppointmentsAdapter(appointmentsList, fragmentManager = parentFragmentManager, currentScreen = "donor") { requestData ->
+        appointmentsAdapter = AppointmentsAdapter(appointmentsList, fragmentManager = parentFragmentManager, currentScreen = "donor", context = requireContext()) { requestData ->
             // Handle item click if needed
         }
         binding.appointmentsRv.adapter = appointmentsAdapter
