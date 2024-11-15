@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adas.redconnect.Appointment
+import com.adas.redconnect.data.Appointment
 import com.adas.redconnect.adapters.ReceiverAdapter
 import com.adas.redconnect.databinding.FragmentDonateBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -125,40 +125,50 @@ class DonateFragment : Fragment() {
 
     private fun acceptRequest(requestData: Map<String, Any>) {
         // Extract the necessary data (Hospital name, Date, Time, Blood Group) from requestData
-        val hospitalName = requestData["hospitalName"] as? String ?: "Unknown Hospital"
-        val date = requestData["date"] as? String ?: "Unknown Date"
-        val time = requestData["time"] as? String ?: "Unknown Time"
+        val hospitalName = requestData["hospital_name"] as? String ?: "Unknown Hospital"
+        val date = requestData["required_date"] as? String ?: "Unknown Date"
         val bloodGroup = requestData["blood_group"] as? String ?: "Unknown Blood Group"
 
         // Trigger sendMessage when a request is accepted
-        sendMessage(hospitalName, date, time, bloodGroup)
+        sendMessage(hospitalName, date, bloodGroup)
     }
 
     // Function to send a message and store the appointment details in Firebase
-    private fun sendMessage(hospitalName: String, date: String, time: String, bloodGroup: String) {
+    private fun sendMessage(hospitalName: String, date: String, bloodGroup: String) {
         val appointmentsRef = database.getReference("appointments")
         val appointmentId = appointmentsRef.push().key ?: return
+        val userRef = database.getReference("donor")
 
-        // Create an appointment object with additional fields
-        val appointment = Appointment(
-            id = appointmentId,
-            hospitalId = "", // You can set this if you have a hospital ID in requestData
-            donorId = mAuth.currentUser?.uid ?: "Unknown Donor",
-            hospitalName = hospitalName,
-            msg = "Accepted request for $bloodGroup",
-            donorBloodType = bloodGroup,
-            timestamp = System.currentTimeMillis().toString(),
-            date = date, // Include date from requestData
-            time = time  // Include time from requestData
-        )
+        // Fetch the donor's name before proceeding
+        userRef.child(mAuth.currentUser!!.uid).child("name").get().addOnSuccessListener { dataSnapshot ->
+            val name = dataSnapshot.value?.toString() ?: "Unknown Donor" // Safely retrieve name or use default value
 
-        // Save message to Firebase
-        appointmentsRef.child(appointmentId).setValue(appointment)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Appointment created for $hospitalName on $date at $time", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Failed to create appointment", Toast.LENGTH_SHORT).show()
-            }
+            // Create the appointment object after donor's name is fetched
+            val appointment = Appointment(
+                id = appointmentId,
+                hospitalId = "", // You can set this if you have a hospital ID in requestData
+                donorId = mAuth.currentUser?.uid ?: "Unknown Donor",
+                donorName = name,
+                hospitalName = hospitalName,
+                msg = "Accepted request for $bloodGroup",
+                donorBloodType = bloodGroup,
+                timestamp = System.currentTimeMillis().toString(),
+                date = date , // Use date from requestData
+                time=""
+            )
+
+            // Save the appointment to Firebase after the donor's name is available
+            appointmentsRef.child(appointmentId).setValue(appointment)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Appointment created for $hospitalName", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Failed to create appointment", Toast.LENGTH_SHORT).show()
+                }
+
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Failed to fetch donor name", Toast.LENGTH_SHORT).show()
+        }
     }
+
 }

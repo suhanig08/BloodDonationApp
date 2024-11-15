@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.adas.redconnect.data.Appointment
 import com.adas.redconnect.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
     private val binding get() = homeBinding!!
 
     // Declare your adapter and appointment list
-    private lateinit var adapter: AppointmentAdapter
+    private lateinit var adapter: AppointmentsAdapter
     private val appointmentList = mutableListOf<Appointment>()
 
     override fun onCreateView(
@@ -35,15 +35,15 @@ class HomeFragment : Fragment() {
 
 
         // Set up RecyclerView
-        binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
-        adapter = AppointmentAdapter(appointmentList) { appointment ->
-            // Handle the click event for each appointment (chat button)
-            //openChatFragment(appointment.id)
-        }
-        binding.appointmentsRv.adapter = adapter
+//        binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
+//        adapter = AppointmentsAdapter(appointmentList) { appointment ->
+//            // Handle the click event for each appointment (chat button)
+//            //openChatFragment(appointment.id)
+//        }
+        //binding.appointmentsRv.adapter = adapter
 
         // Load the appointments
-        loadAppointments()
+        //loadAppointments()
 
 //        binding.appointmentsRv.layoutManager = LinearLayoutManager(requireContext())
 //
@@ -102,31 +102,31 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun loadAppointments() {
-        val appointmentsRef = database.getReference("appointments")
-
-        appointmentsRef.orderByChild("donorId").equalTo(auth.currentUser?.uid)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    appointmentList.clear() // Clear the list before adding new data
-
-                    if (snapshot.exists()) {
-                        for (appointmentSnapshot in snapshot.children) {
-                            val appointment = appointmentSnapshot.getValue(Appointment::class.java)
-                            appointment?.let { appointmentList.add(it) }
-                        }
-                        adapter.notifyDataSetChanged() // Notify the adapter of data change
-                    } else {
-                        // Handle the case where no appointments are found
-                        // Optionally, show a message in the UI
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    // Handle possible errors here
-                }
-            })
-    }
+//    private fun loadAppointments() {
+//        val appointmentsRef = database.getReference("appointments")
+//
+//        appointmentsRef.orderByChild("donorId").equalTo(auth.currentUser?.uid)
+//            .addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    appointmentList.clear() // Clear the list before adding new data
+//
+//                    if (snapshot.exists()) {
+//                        for (appointmentSnapshot in snapshot.children) {
+//                            val appointment = appointmentSnapshot.getValue(Appointment::class.java)
+//                            appointment?.let { appointmentList.add(it) }
+//                        }
+//                        adapter.notifyDataSetChanged() // Notify the adapter of data change
+//                    } else {
+//                        // Handle the case where no appointments are found
+//                        // Optionally, show a message in the UI
+//                    }
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    // Handle possible errors here
+//                }
+//            })
+//    }
 
     private fun openChatFragment(appointmentId: String) {
         val chatFragment = ChatFragment() // Replace with your actual ChatFragment class

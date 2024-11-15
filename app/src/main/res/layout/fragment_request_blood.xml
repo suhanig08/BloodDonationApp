@@ -1,11 +1,15 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <Button
         android:layout_width="270dp"
@@ -42,20 +46,30 @@
 
 
     <EditText
-        android:id="@+id/editText_mobile_number"
+        android:id="@+id/editText_hospitalName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Hospital Name"
+        android:singleLine="true"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editText_mobile_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number"
+        android:inputType="phone"
         android:layout_marginBottom="16dp" />
 
     <!-- Blood Group Spinner -->
 
     <!-- Required Date EditText -->
+
     <EditText
         android:id="@+id/editText_required_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Required Date"
+        android:hint="Required Date in dd/mm/yyyy"
         android:layout_marginBottom="16dp"
         android:inputType="date"/>
 
@@ -95,5 +109,5 @@
         android:backgroundTint="@color/red"
         android:padding="18dp"/>
 
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

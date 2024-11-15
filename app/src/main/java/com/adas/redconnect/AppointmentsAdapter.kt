@@ -1,21 +1,20 @@
 package com.adas.redconnect
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import com.adas.redconnect.data.Appointment
 
 class AppointmentsAdapter(private val appointmentsList: List<Appointment>,
                           private val fragmentManager: FragmentManager):
     RecyclerView.Adapter<AppointmentsAdapter.AppointmentsViewHolder>() {
 
     inner class AppointmentsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val hospitalName: TextView = itemView.findViewById(R.id.hospitalName)
+        val donorName: TextView = itemView.findViewById(R.id.donorName)
         val apptDate: TextView = itemView.findViewById(R.id.apptDate)
         val apptTime: TextView = itemView.findViewById(R.id.apptTime)
         val chatButton : ImageButton = itemView.findViewById(R.id.chatButton)
@@ -35,7 +34,7 @@ class AppointmentsAdapter(private val appointmentsList: List<Appointment>,
 
     override fun onBindViewHolder(holder: AppointmentsViewHolder, position: Int) {
         val appointment = appointmentsList[position]
-        holder.hospitalName.text = appointment.hospitalName
+        holder.donorName.text = appointment.donorName
         holder.apptDate.text = appointment.date
         holder.apptTime.text = appointment.time
 
@@ -52,3 +51,4 @@ class AppointmentsAdapter(private val appointmentsList: List<Appointment>,
         }
     }
 }
+

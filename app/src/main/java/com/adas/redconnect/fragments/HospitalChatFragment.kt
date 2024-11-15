@@ -5,11 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adas.redconnect.Appointment
+import com.adas.redconnect.data.Appointment
 import com.adas.redconnect.AppointmentsAdapter
-import com.adas.redconnect.R
 import com.adas.redconnect.adapters.UserAdapter
 import com.adas.redconnect.databinding.FragmentHospitalChatBinding
 import com.adas.redconnect.data.User
