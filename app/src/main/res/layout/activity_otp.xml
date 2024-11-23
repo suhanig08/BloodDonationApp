@@ -44,88 +44,88 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/authLL1"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintTop_toBottomOf="@+id/authLL1">
 
         <TextView
-            android:paddingTop="10dp"
-            android:layout_margin="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter Verification Code"
+            android:layout_margin="16dp"
             android:fontFamily="@font/mona_m"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:gravity="center"
-            android:paddingBottom="8dp"/>
+            android:paddingTop="10dp"
+            android:paddingBottom="8dp"
+            android:text="Enter Verification Code"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="We are automatically detecting a SMS sent to your mobile number ******7412"-->
-<!--            android:textSize="14sp"-->
-<!--            android:textColor="#666666"-->
-<!--            android:gravity="center"-->
-<!--            android:paddingBottom="16dp"/>-->
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="We are automatically detecting a SMS sent to your mobile number ******7412"-->
+        <!--            android:textSize="14sp"-->
+        <!--            android:textColor="#666666"-->
+        <!--            android:gravity="center"-->
+        <!--            android:paddingBottom="16dp"/>-->
 
         <!-- OTP Input Boxes -->
         <LinearLayout
-            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <EditText
-                android:cursorVisible="false"
                 android:id="@+id/otp_box1"
+                style="@style/otpBg"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                style="@style/otpBg"
+                android:cursorVisible="false"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="24sp" />
 
             <EditText
-                android:cursorVisible="false"
                 android:id="@+id/otp_box2"
+                style="@style/otpBg"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                style="@style/otpBg"
+                android:cursorVisible="false"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="24sp" />
 
             <EditText
-                android:cursorVisible="false"
                 android:id="@+id/otp_box3"
+                style="@style/otpBg"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                style="@style/otpBg"
+                android:cursorVisible="false"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="24sp" />
 
             <EditText
-                android:cursorVisible="false"
                 android:id="@+id/otp_box4"
+                style="@style/otpBg"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                style="@style/otpBg"
+                android:cursorVisible="false"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
@@ -133,24 +133,24 @@
 
             <EditText
                 android:id="@+id/otp_box5"
+                style="@style/otpBg"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                style="@style/otpBg"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="24sp" />
 
             <EditText
-                android:cursorVisible="false"
                 android:id="@+id/otp_box6"
+                style="@style/otpBg"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                style="@style/otpBg"
+                android:cursorVisible="false"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
@@ -159,14 +159,14 @@
 
         <!-- Resend OTP Link -->
         <TextView
-            android:layout_marginStart="16dp"
             android:id="@+id/resendTv"
+            style="@style/otpResendTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
             android:text="Didn’t receive the OTP? Resend OTP"
-            android:textSize="14sp"
-            android:textColor="#66FFFF"
-            android:gravity="center"/>
+            android:textSize="14sp" />
 
         <!--        <AutoCompleteTextView-->
         <!--            android:id="@+id/locationEt"-->
@@ -184,12 +184,12 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/NextBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
             style="@style/btnStyle"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="Next"/>
+            android:text="Next" />
 
         <ProgressBar
             android:id="@+id/otp_circular_progress_bar"
@@ -197,11 +197,11 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
+            android:layout_marginTop="4dp"
             android:indeterminate="false"
             android:max="100"
             android:progress="100"
-            android:progressTint="#FF0000"
-            android:layout_marginTop="4dp"/>
+            android:progressTint="#FF0000" />
 
     </LinearLayout>
 

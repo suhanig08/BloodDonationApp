@@ -112,7 +112,7 @@
                 android:layout_height="75dp"
                 android:layout_marginTop="95dp"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/red"
+                android:backgroundTint="@color/redPrimary"
                 android:drawableTop="@drawable/baseline_navigate_next_24" />
 
         </LinearLayout>

@@ -70,32 +70,31 @@ class HomeFragment : Fragment() {
             transaction.commit()
 
 
-        }
-
-
         dbRef.child(auth.currentUser!!.uid).child("bloodgroup").get().addOnSuccessListener { snapshot ->
-            if (snapshot.exists()) {
-                val bloodGroup = snapshot.value.toString()
-                binding.userBloodGrp.text = bloodGroup
-            } else {
-                binding.userBloodGrp.text = "N/A" // Or some placeholder text
-              }
+            if(context != null){
+                if (snapshot.exists()) {
+                    val bloodGroup = snapshot.value.toString()
+                    binding.userBloodGrp.text = bloodGroup
+                } else {
+                    binding.userBloodGrp.text = "N/A" // Or some placeholder text
+                }
+            }
+
         }.addOnFailureListener {
             binding.userBloodGrp.text = "Error" // In case of any errors
         }
         dbRef.child(auth.currentUser!!.uid).child("name").get().addOnSuccessListener { snapshot ->
-            if (snapshot.exists()) {
-                val name= snapshot.value.toString()
-                binding.userName.text = "Hi, $name!"
-            } else {
-                binding.userName.text = "N/A" // Or some placeholder text
+            if (context != null){
+                if (snapshot.exists()) {
+                    val name= snapshot.value.toString()
+                    binding.userName.text = "Hi, $name!"
+                } else {
+                    binding.userName.text = "N/A" // Or some placeholder text
+                }
             }
         }.addOnFailureListener {
             binding.userName.text = "Error" // In case of any errors
         }
-
-        
-    }
 
     private fun loadAppointments() {
         // Get the current user's UID
