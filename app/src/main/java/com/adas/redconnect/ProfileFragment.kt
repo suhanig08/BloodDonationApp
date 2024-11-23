@@ -41,13 +41,25 @@ class ProfileFragment : Fragment() {
             .addOnSuccessListener { snapshot ->
                 val url = snapshot.value as? String
                 if (!url.isNullOrEmpty()) {
-                    Glide.with(this).load(url).into(binding.profileImage)
+                    Glide.with(this)
+                        .load(url)
+                        .placeholder(R.drawable.img)
+                        .error(R.drawable.img)
+                        .into(binding.profileImage)
                 } else {
-                    Glide.with(this).load(R.drawable.img).into(binding.profileImage)
+                    Glide.with(this)
+                        .load(R.drawable.img)
+                        .placeholder(R.drawable.img)
+                        .error(R.drawable.img)
+                        .into(binding.profileImage)
                 }
             }
             .addOnFailureListener {
-                Glide.with(this).load(R.drawable.img).into(binding.profileImage)
+                Glide.with(this)
+                    .load(R.drawable.img)
+                    .placeholder(R.drawable.img)
+                    .error(R.drawable.img)
+                    .into(binding.profileImage)
             }
 
 
@@ -55,9 +67,12 @@ class ProfileFragment : Fragment() {
         loadProfileData()
 
         // Logout button functionality
-        binding.logoutBtn.setOnClickListener {
-            signOut()
+        if(activity != null){
+            binding.logoutBtn.setOnClickListener {
+                signOut()
+            }
         }
+
 
         // Handle toggle availability switch
         val toggleAvailability: MaterialSwitch = view.findViewById(R.id.toggle_availability)
@@ -86,26 +101,28 @@ class ProfileFragment : Fragment() {
         }
 
         // Load blood group
-        dbRef.child(auth.currentUser!!.uid).child("bloodGroup").get().addOnSuccessListener { snapshot ->
-            if (snapshot.exists()) {
-                binding.tvBloodGrp.text = snapshot.value.toString()
-            } else {
-                binding.tvBloodGrp.text = "N/A"
+        dbRef.child(auth.currentUser!!.uid).child("bloodGroup").get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    binding.tvBloodGrp.text = snapshot.value.toString()
+                } else {
+                    binding.tvBloodGrp.text = "N/A"
+                }
+            }.addOnFailureListener {
+                binding.tvBloodGrp.text = "Error"
             }
-        }.addOnFailureListener {
-            binding.tvBloodGrp.text = "Error"
-        }
 
         // Load last donation date
-        dbRef.child(auth.currentUser!!.uid).child("dateDonated").get().addOnSuccessListener { snapshot ->
-            if (snapshot.exists()) {
-                binding.lastDonation.text = snapshot.value.toString()
-            } else {
-                binding.lastDonation.text = "N/A"
+        dbRef.child(auth.currentUser!!.uid).child("dateDonated").get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    binding.lastDonation.text = snapshot.value.toString()
+                } else {
+                    binding.lastDonation.text = "N/A"
+                }
+            }.addOnFailureListener {
+                binding.lastDonation.text = "Error"
             }
-        }.addOnFailureListener {
-            binding.lastDonation.text = "Error"
-        }
     }
 
     private fun signOut() {

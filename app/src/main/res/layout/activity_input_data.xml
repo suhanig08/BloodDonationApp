@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="#1C1C1C">
+        android:padding="16dp">
 
         <!-- Header -->
         <TextView
@@ -18,11 +17,13 @@
             android:layout_height="wrap_content"
             android:text="Donation Information"
             android:textSize="24sp"
-            android:textColor="#E64E4C"
+            android:textColor="@color/redPrimary"
             android:gravity="center"
             android:fontFamily="@font/inter_sb"
             android:padding="24dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:background="@color/transparent"
+            />
 
         <!-- Months since last donation -->
         <TextView
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="Months since last donation"
             android:textSize="16sp"
-            android:textColor="#FFFFFF"
+
             android:fontFamily="@font/inter"
             android:layout_marginTop="16dp"/>
 
@@ -43,7 +44,6 @@
             android:textColor="#FFFFFF"
             android:inputType="number"
             android:backgroundTint="@color/redPrimary"
-            android:fontFamily="@font/inter"
             android:padding="12dp" />
 
         <!-- Number of donations -->
@@ -52,8 +52,6 @@
             android:layout_height="wrap_content"
             android:text="Number of donations"
             android:textSize="16sp"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/inter"
             android:layout_marginTop="16dp"/>
 
         <EditText
@@ -65,7 +63,6 @@
             android:textColor="#FFFFFF"
             android:inputType="number"
             android:backgroundTint="@color/redPrimary"
-            android:fontFamily="@font/inter"
             android:padding="12dp" />
 
         <!-- Total amount donated -->
@@ -74,8 +71,6 @@
             android:layout_height="wrap_content"
             android:text="Total amount donated"
             android:textSize="16sp"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/inter"
             android:layout_marginTop="16dp"/>
 
         <EditText
@@ -87,7 +82,6 @@
             android:textColor="#FFFFFF"
             android:inputType="number"
             android:backgroundTint="@color/redPrimary"
-            android:fontFamily="@font/inter"
             android:padding="12dp" />
 
         <!-- Frequency of donations -->
@@ -96,8 +90,6 @@
             android:layout_height="wrap_content"
             android:text="Frequency of donations"
             android:textSize="16sp"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/inter"
             android:layout_marginTop="16dp"/>
 
         <EditText
@@ -109,17 +101,16 @@
             android:textColor="#FFFFFF"
             android:inputType="number"
             android:backgroundTint="@color/redPrimary"
-            android:fontFamily="@font/inter"
             android:padding="12dp" />
 
         <!-- Submit Button -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submitBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Submit"
+            style="@style/btnStyle"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#E64E4C"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/inter"
             android:textStyle="bold"/>

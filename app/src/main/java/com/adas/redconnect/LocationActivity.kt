@@ -88,7 +88,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
             override fun onPlaceSelected(place: Place) {
                 searchLatlng = place.latLng!!
-                binding.locationTv.setText(place.address)
+                binding.locationTv.text = place.address
                 zoomOnSearchLoc()
                 if(binding.locationTv.text.isNotEmpty()){
                     nextBtnEnabled()
@@ -156,6 +156,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     override fun onMapReady(p0: GoogleMap) {
+        Log.i("map", "map is ready")
         myMap = p0
     }
 

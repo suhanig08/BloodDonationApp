@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
 
     android:layout_height="180dp"
     android:layout_marginBottom="8dp"
@@ -11,24 +11,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
+
         android:padding="16dp"
-        android:background="@color/lightGrey">
+        android:background="@color/transparent">
 
         <!-- Blood Group -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@color/transparent"
             android:layout_marginStart="20dp">
         <TextView
             android:id="@+id/blood_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="O+"
+            android:background="@color/transparent"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <!-- Units -->
@@ -36,6 +40,7 @@
             android:id="@+id/units"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:text="2 Units (Blood)" />
 
         <!-- Mobile Number -->
@@ -43,6 +48,7 @@
             android:id="@+id/mobile_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:text="Hospital Name"/>
 
         <!-- Required Date -->
@@ -50,13 +56,14 @@
             android:id="@+id/required_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wednesday, Nov 6"
-            android:textColor="@android:color/black" />
+            android:background="@color/transparent"
+            android:text="Wednesday, Nov 6" />
 
         <!-- Critical Status -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/transparent"
                 android:text="Created at: "
                 android:textColor="@android:color/darker_gray" />
 
@@ -67,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Created at: 12:00 PM"
+            android:background="@color/transparent"
             android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
@@ -75,24 +83,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="30dp">
-        <TextView
-            android:id="@+id/critical_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Critical: Yes"
-            android:layout_marginBottom="15dp"
-            android:textColor="@android:color/holo_red_dark" />
-        <Button
-
-            android:id="@+id/accept_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Accept"
-            android:backgroundTint="@color/green"
-            android:textColor="@android:color/white"
-            android:padding="8dp"
-            android:layout_marginTop="8dp" />
+            android:background="@color/transparent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="30dp">
+            <TextView
+                android:id="@+id/critical_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Critical: Yes"
+                android:background="@color/transparent"
+                android:layout_marginBottom="15dp"
+                android:textColor="@android:color/holo_red_dark" />
+            <Button
+                android:id="@+id/accept_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accept"
+                android:backgroundTint="@color/green"
+                android:textColor="@android:color/white"
+                android:padding="8dp"
+                android:layout_marginTop="8dp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
